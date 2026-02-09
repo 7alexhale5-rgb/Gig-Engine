@@ -1,0 +1,27 @@
+import type { Metadata } from "next"
+import "./globals.css"
+import { Sidebar } from "@/components/layout"
+
+export const metadata: Metadata = {
+  title: "PrettyFly Acquisition Engine",
+  description: "Centralized freelance operations platform for gig economy acquisition",
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className="dark">
+      <body className="font-sans antialiased">
+        <div className="flex h-screen overflow-hidden">
+          <Sidebar />
+          <main className="flex flex-1 flex-col overflow-hidden">
+            {children}
+          </main>
+        </div>
+      </body>
+    </html>
+  )
+}
