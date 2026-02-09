@@ -6,10 +6,12 @@
  *
  * Do not manually edit this file. Re-run the command above after
  * any migration changes to keep types in sync with the database schema.
+ *
+ * SCHEMA ALIGNMENT: Verified against migrations 001-014 on 2026-02-09.
  */
 
 // ---------------------------------------------------------------------------
-// Enums
+// Enums (match SQL CHECK constraints exactly)
 // ---------------------------------------------------------------------------
 
 export type OpportunityStage =
@@ -38,18 +40,19 @@ export type ContractType = "fixed" | "hourly"
 
 export type RevenueEntryType = "gig_payment" | "retainer" | "bonus" | "tip"
 
+// Matches migration 010: CHECK (category IN ('bio','credential','process','testimonial','case_study'))
 export type ContentBlockCategory =
-  | "headline"
-  | "overview"
-  | "case_study"
-  | "faq"
-  | "skill_description"
+  | "bio"
+  | "credential"
+  | "process"
   | "testimonial"
+  | "case_study"
 
 // ---------------------------------------------------------------------------
-// Row types — one per database table
+// Row types — one per database table, matching SQL migrations exactly
 // ---------------------------------------------------------------------------
 
+/** Migration 001 */
 export interface Platform {
   id: string
   name: string
@@ -64,6 +67,7 @@ export interface Platform {
   updated_at: string
 }
 
+/** Migration 002 */
 export interface ServicePillar {
   id: string
   name: string
@@ -74,6 +78,7 @@ export interface ServicePillar {
   updated_at: string
 }
 
+/** Migration 003 */
 export interface GigListing {
   id: string
   platform_id: string
@@ -98,6 +103,7 @@ export interface GigListing {
   updated_at: string
 }
 
+/** Migration 011 — uses JSONB for pricing and performance snapshots */
 export interface GigVersion {
   id: string
   gig_id: string
@@ -105,16 +111,13 @@ export interface GigVersion {
   title: string
   description: string
   tags: string[]
-  pricing_basic: number | null
-  pricing_standard: number | null
-  pricing_premium: number | null
-  delivery_days_basic: number | null
-  delivery_days_standard: number | null
-  delivery_days_premium: number | null
+  pricing_json: Record<string, unknown>
   change_notes: string
+  performance_snapshot_json: Record<string, unknown>
   created_at: string
 }
 
+/** Migration 004 */
 export interface Opportunity {
   id: string
   platform_id: string
@@ -149,6 +152,7 @@ export interface Opportunity {
   updated_at: string
 }
 
+/** Migration 005 — win_rate is a GENERATED column */
 export interface ProposalTemplate {
   id: string
   name: string
@@ -158,12 +162,13 @@ export interface ProposalTemplate {
   variables: string[]
   times_used: number
   times_won: number
-  win_rate: number
+  win_rate: number // GENERATED ALWAYS AS (times_won / times_used)
   tags: string[]
   created_at: string
   updated_at: string
 }
 
+/** Migration 006 */
 export interface Project {
   id: string
   opportunity_id: string | null
@@ -180,6 +185,7 @@ export interface Project {
   updated_at: string
 }
 
+/** Migration 007 */
 export interface PortfolioItem {
   id: string
   pillar_id: string | null
@@ -196,6 +202,7 @@ export interface PortfolioItem {
   updated_at: string
 }
 
+/** Migration 008 — net_amount is a GENERATED column */
 export interface RevenueEntry {
   id: string
   opportunity_id: string | null
@@ -206,38 +213,132 @@ export interface RevenueEntry {
   entry_type: RevenueEntryType
   received_date: string
   platform_fee_amount: number
-  net_amount: number
+  net_amount: number // GENERATED ALWAYS AS (amount - platform_fee_amount)
   notes: string
   created_at: string
 }
 
+/**
+ * Migration 009 — matches SQL exactly:
+ * proposals_sent, proposals_viewed, responses_received, contracts_won,
+ * gig_impressions, gig_clicks, gig_orders, revenue, notes
+ * Note: no updated_at column in this table, UNIQUE(date, platform_id)
+ */
 export interface DailyMetrics {
   id: string
   date: string
   platform_id: string | null
   proposals_sent: number
-  proposals_won: number
-  impressions: number
-  clicks: number
-  orders: number
+  proposals_viewed: number
+  responses_received: number
+  contracts_won: number
+  gig_impressions: number
+  gig_clicks: number
+  gig_orders: number
   revenue: number
-  hours_worked: number
   notes: string
+  created_at: string
+}
+
+/**
+ * Migration 010 — matches SQL exactly:
+ * category CHECK ('bio','credential','process','testimonial','case_study'),
+ * content_text (not 'body'), platform_tags/pillar_tags (TEXT[] not FKs),
+ * times_used (not is_active)
+ */
+export interface ContentBlock {
+  id: string
+  category: ContentBlockCategory
+  title: string
+  content_text: string
+  platform_tags: string[]
+  pillar_tags: string[]
+  times_used: number
   created_at: string
   updated_at: string
 }
 
-export interface ContentBlock {
+// ---------------------------------------------------------------------------
+// Typed JSON structures for JSONB columns
+// ---------------------------------------------------------------------------
+
+export interface Milestone {
   id: string
-  pillar_id: string | null
-  platform_id: string | null
-  category: ContentBlockCategory
   title: string
-  body: string
-  tags: string[]
-  is_active: boolean
-  created_at: string
-  updated_at: string
+  description?: string
+  due_date?: string
+  completed: boolean
+  completed_at?: string
+}
+
+export interface ChecklistItem {
+  id: string
+  text: string
+  completed: boolean
+  completed_at?: string
+}
+
+export interface TimeEntry {
+  id: string
+  date: string
+  hours: number
+  description: string
+}
+
+export interface CommunicationLog {
+  id: string
+  date: string
+  channel: "email" | "slack" | "call" | "platform_message" | "other"
+  summary: string
+}
+
+export interface GigPricing {
+  basic: { price: number; delivery_days: number; description?: string }
+  standard: { price: number; delivery_days: number; description?: string }
+  premium: { price: number; delivery_days: number; description?: string }
+}
+
+export interface PerformanceSnapshot {
+  impressions: number
+  clicks: number
+  orders: number
+  conversion_rate: number
+  revenue_total: number
+  captured_at: string
+}
+
+// ---------------------------------------------------------------------------
+// Utility types
+// ---------------------------------------------------------------------------
+
+type Tables = Database["public"]["Tables"]
+
+/** Extract the Row type for a given table name */
+export type TableRow<T extends keyof Tables> = Tables[T]["Row"]
+
+/** Extract the Insert type for a given table name */
+export type TableInsert<T extends keyof Tables> = Tables[T]["Insert"]
+
+/** Extract the Update type for a given table name */
+export type TableUpdate<T extends keyof Tables> = Tables[T]["Update"]
+
+/** Opportunity with joined platform and pillar data */
+export interface OpportunityWithRelations extends Opportunity {
+  platforms?: Pick<Platform, "name"> | null
+  service_pillars?: Pick<ServicePillar, "name" | "color"> | null
+  proposal_templates?: Pick<ProposalTemplate, "name"> | null
+}
+
+/** Gig listing with joined platform and pillar data */
+export interface GigListingWithRelations extends GigListing {
+  platforms?: Pick<Platform, "name"> | null
+  service_pillars?: Pick<ServicePillar, "name" | "color"> | null
+}
+
+/** Revenue entry with joined platform and pillar data */
+export interface RevenueEntryWithRelations extends RevenueEntry {
+  platforms?: Pick<Platform, "name"> | null
+  service_pillars?: Pick<ServicePillar, "name" | "color"> | null
 }
 
 // ---------------------------------------------------------------------------
@@ -304,7 +405,7 @@ export interface Database {
       content_blocks: {
         Row: ContentBlock
         Insert: Partial<ContentBlock> &
-          Pick<ContentBlock, "category" | "title" | "body">
+          Pick<ContentBlock, "category" | "title" | "content_text">
         Update: Partial<ContentBlock>
       }
     }
