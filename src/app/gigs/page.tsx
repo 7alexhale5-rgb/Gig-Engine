@@ -1,14 +1,45 @@
 "use client"
 
-import { Header } from "@/components/layout"
-import { PageContainer } from "@/components/layout"
-import { Plus, Filter } from "lucide-react"
+export const dynamic = "force-dynamic"
+
+import { useEffect, useState, useCallback } from "react"
+import { Header, PageContainer } from "@/components/layout"
+import { GigCard } from "@/components/gigs"
+import { EmptyState } from "@/components/shared"
+import { useGigs } from "@/lib/hooks/useGigs"
 import { SERVICE_PILLARS } from "@/lib/utils/constants"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { Plus, Filter, Package } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { GigForm } from "@/components/gigs"
+import type { GigListing } from "@/lib/supabase/types"
 
 export default function GigsPage() {
   const [activePillar, setActivePillar] = useState<string | null>(null)
+  const [showForm, setShowForm] = useState(false)
+  const { gigs, loading, fetchGigs, createGig } = useGigs()
+
+  useEffect(() => {
+    fetchGigs()
+  }, [fetchGigs])
+
+  const filteredGigs = activePillar
+    ? gigs.filter((g) => g.pillar_id === activePillar)
+    : gigs
+
+  const handleCreate = useCallback(
+    async (data: Partial<GigListing> & Pick<GigListing, "platform_id" | "pillar_id" | "title">) => {
+      await createGig(data)
+      setShowForm(false)
+    },
+    [createGig]
+  )
 
   return (
     <>
@@ -56,21 +87,43 @@ export default function GigsPage() {
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm text-muted-foreground">
-              Showing all gigs
+              Showing {filteredGigs.length} gig{filteredGigs.length !== 1 ? "s" : ""}
             </span>
           </div>
-          <button className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-            <Plus className="h-4 w-4" />
+          <Button size="sm" onClick={() => setShowForm(true)}>
+            <Plus className="mr-1.5 h-4 w-4" />
             New Gig
-          </button>
+          </Button>
         </div>
 
         {/* Gig Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="flex h-48 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
-            10 priority gigs seeded. Connect Supabase to display.
+        {!loading && filteredGigs.length === 0 ? (
+          <EmptyState
+            icon={Package}
+            title="No gigs yet"
+            description="Create your first gig listing to start tracking performance."
+            action={{ label: "Create Gig", onClick: () => setShowForm(true) }}
+          />
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredGigs.map((gig) => (
+              <GigCard key={gig.id} gig={gig} />
+            ))}
           </div>
-        </div>
+        )}
+
+        {/* Create Form Dialog */}
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>New Gig Listing</DialogTitle>
+            </DialogHeader>
+            <GigForm
+              onSubmit={handleCreate}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </PageContainer>
     </>
   )

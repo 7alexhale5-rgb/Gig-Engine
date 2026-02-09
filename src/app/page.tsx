@@ -1,9 +1,10 @@
-import { Header } from "@/components/layout"
-import { PageContainer } from "@/components/layout"
+import { Header, PageContainer } from "@/components/layout"
 import { MetricCard } from "@/components/dashboard/MetricCard"
 import { DailyTargets } from "@/components/dashboard/DailyTargets"
 import { PipelineSnapshot } from "@/components/dashboard/PipelineSnapshot"
 import { RevenueChart } from "@/components/dashboard/RevenueChart"
+import { PillarDistribution } from "@/components/dashboard/PillarDistribution"
+import { WeeklyTrend } from "@/components/dashboard/WeeklyTrend"
 
 export default function DashboardHome() {
   return (
@@ -41,10 +42,10 @@ export default function DashboardHome() {
           />
         </div>
 
-        {/* Second Row */}
+        {/* Revenue Chart + Daily Targets */}
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <RevenueChart />
+            <RevenueChart data={[]} />
           </div>
           <DailyTargets
             proposalsSent={0}
@@ -54,9 +55,17 @@ export default function DashboardHome() {
           />
         </div>
 
-        {/* Pipeline Snapshot */}
+        {/* Pipeline Snapshot + Pillar Distribution */}
+        <div className="mt-6 grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <PipelineSnapshot />
+          </div>
+          <PillarDistribution data={[]} />
+        </div>
+
+        {/* Weekly Trend */}
         <div className="mt-6">
-          <PipelineSnapshot />
+          <WeeklyTrend currentWeek={[]} previousWeek={[]} />
         </div>
       </PageContainer>
     </>

@@ -1,8 +1,27 @@
-import { Header } from "@/components/layout"
-import { PageContainer } from "@/components/layout"
+"use client"
+
+import { useState } from "react"
+import { Header, PageContainer } from "@/components/layout"
+import { ProjectCard } from "@/components/projects"
+import { EmptyState } from "@/components/shared"
 import { FolderKanban, Plus, Clock, CheckCircle2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { ProjectForm } from "@/components/projects"
+import type { Project } from "@/lib/supabase/types"
 
 export default function ProjectsPage() {
+  const [showForm, setShowForm] = useState(false)
+  const projects: Project[] = [] // Will be fetched from Supabase
+
+  const activeCount = projects.filter((p) => p.status === "active").length
+  const completedCount = projects.filter((p) => p.status === "completed").length
+
   return (
     <>
       <Header
@@ -17,7 +36,7 @@ export default function ProjectsPage() {
               <FolderKanban className="h-4 w-4 text-pillar-automation" />
               <span className="text-sm font-medium">Active</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">0</p>
+            <p className="mt-1 text-2xl font-bold">{activeCount}</p>
           </div>
           <div className="rounded-lg border border-border bg-card p-4">
             <div className="flex items-center gap-2">
@@ -31,7 +50,7 @@ export default function ProjectsPage() {
               <CheckCircle2 className="h-4 w-4 text-pillar-architecture" />
               <span className="text-sm font-medium">Completed</span>
             </div>
-            <p className="mt-1 text-2xl font-bold">0</p>
+            <p className="mt-1 text-2xl font-bold">{completedCount}</p>
           </div>
           <div className="rounded-lg border border-border bg-card p-4">
             <div className="flex items-center gap-2">
@@ -44,19 +63,39 @@ export default function ProjectsPage() {
 
         {/* Add Project */}
         <div className="mb-4 flex justify-end">
-          <button className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-            <Plus className="h-4 w-4" />
+          <Button size="sm" onClick={() => setShowForm(true)}>
+            <Plus className="mr-1.5 h-4 w-4" />
             New Project
-          </button>
+          </Button>
         </div>
 
         {/* Projects List */}
-        <div className="rounded-lg border border-border bg-card p-12 text-center">
-          <FolderKanban className="mx-auto h-8 w-8 text-muted-foreground" />
-          <p className="mt-2 text-sm text-muted-foreground">
-            No active projects. Win an opportunity to create your first delivery.
-          </p>
-        </div>
+        {projects.length === 0 ? (
+          <EmptyState
+            icon={FolderKanban}
+            title="No active projects"
+            description="Win an opportunity to create your first delivery."
+            action={{ label: "Create Project", onClick: () => setShowForm(true) }}
+          />
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
+
+        <Dialog open={showForm} onOpenChange={setShowForm}>
+          <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>New Project</DialogTitle>
+            </DialogHeader>
+            <ProjectForm
+              onSubmit={async () => setShowForm(false)}
+              onCancel={() => setShowForm(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </PageContainer>
     </>
   )

@@ -1,11 +1,80 @@
 "use client"
 
-import { Header } from "@/components/layout"
-import { PageContainer } from "@/components/layout"
-import { Zap, Copy, FileText } from "lucide-react"
+export const dynamic = "force-dynamic"
+
+import { useEffect, useMemo } from "react"
+import { Header, PageContainer } from "@/components/layout"
+import { ProposalGenerator, QuickFirePanel } from "@/components/proposals"
+import { TemplateCard } from "@/components/proposals/TemplateCard"
+import type { TemplateCardData } from "@/components/proposals/TemplateCard"
+import { useProposals } from "@/lib/hooks/useProposals"
+import { Zap, FileText } from "lucide-react"
 import Link from "next/link"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { SERVICE_PILLARS } from "@/lib/utils/constants"
+import { SEED_PLATFORMS } from "@/data/seed-platforms"
+
+// ---------------------------------------------------------------------------
+// Platform options derived from seed data
+// ---------------------------------------------------------------------------
+
+const PLATFORM_OPTIONS = SEED_PLATFORMS.map((p, i) => ({
+  id: `platform-${i}`,
+  name: p.name,
+}))
+
+// ---------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------
 
 export default function ProposalsPage() {
+  const { templates, loading, fetchTemplates } = useProposals()
+
+  useEffect(() => {
+    fetchTemplates()
+  }, [fetchTemplates])
+
+  const templateCards: TemplateCardData[] = useMemo(
+    () =>
+      templates.map((t) => ({
+        id: t.id,
+        name: t.name,
+        pillarName: t.pillar_id,
+        platformName: t.platform_id,
+        templateText: t.template_text,
+        timesUsed: t.times_used,
+        timesWon: t.times_won,
+        winRate: t.win_rate,
+        variables: t.variables,
+        tags: t.tags,
+      })),
+    [templates]
+  )
+
+  const quickFireTemplates = useMemo(
+    () =>
+      templates.map((t) => ({
+        id: t.id,
+        name: t.name,
+        pillar_id: t.pillar_id,
+        template_text: t.template_text,
+      })),
+    [templates]
+  )
+
+  const generatorTemplates = useMemo(
+    () =>
+      templates.map((t) => ({
+        id: t.id,
+        name: t.name,
+        pillar_id: t.pillar_id,
+        platform_id: t.platform_id,
+        template_text: t.template_text,
+        variables: t.variables,
+      })),
+    [templates]
+  )
+
   return (
     <>
       <Header
@@ -13,83 +82,58 @@ export default function ProposalsPage() {
         description="Generate, manage, and track proposals"
       />
       <PageContainer>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {/* Quick-Fire Mode */}
-          <div className="rounded-lg border border-border bg-card p-6">
-            <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-pillar-automation" />
-              <h2 className="text-base font-semibold">Quick-Fire Mode</h2>
-            </div>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Paste a job description and generate a personalized proposal in seconds.
-            </p>
+        <Tabs defaultValue="quickfire" className="w-full">
+          <TabsList>
+            <TabsTrigger value="quickfire" className="gap-1.5">
+              <Zap className="h-4 w-4" />
+              Quick-Fire Mode
+            </TabsTrigger>
+            <TabsTrigger value="generator" className="gap-1.5">
+              <FileText className="h-4 w-4" />
+              Full Generator
+            </TabsTrigger>
+          </TabsList>
 
-            <div className="mt-4 space-y-4">
-              <div>
-                <label className="text-sm font-medium text-foreground">
-                  Job Description
-                </label>
-                <textarea
-                  className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  rows={6}
-                  placeholder="Paste the job posting here..."
+          <TabsContent value="quickfire" className="mt-6">
+            <div className="grid gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-2">
+                <QuickFirePanel
+                  templates={quickFireTemplates}
+                  platforms={PLATFORM_OPTIONS}
+                  pillars={SERVICE_PILLARS}
                 />
               </div>
-
               <div>
-                <label className="text-sm font-medium text-foreground">
-                  Template
-                </label>
-                <select className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm">
-                  <option>Select a proposal template...</option>
-                </select>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold">Templates</h3>
+                  <Link
+                    href="/proposals/templates"
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    View All
+                  </Link>
+                </div>
+                <div className="mt-3 space-y-3">
+                  {templateCards.slice(0, 3).map((card) => (
+                    <TemplateCard key={card.id} template={card} />
+                  ))}
+                  {templates.length === 0 && !loading && (
+                    <p className="text-sm text-muted-foreground">
+                      No templates yet. Create one to get started.
+                    </p>
+                  )}
+                </div>
               </div>
-
-              <button className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-                <Zap className="h-4 w-4" />
-                Generate Proposal
-              </button>
             </div>
+          </TabsContent>
 
-            {/* Generated Output */}
-            <div className="mt-4 rounded-lg border border-dashed border-border p-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-muted-foreground">
-                  Generated Proposal
-                </span>
-                <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
-                  <Copy className="h-3 w-3" />
-                  Copy
-                </button>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Generated proposal will appear here...
-              </p>
-            </div>
-          </div>
-
-          {/* Template Library */}
-          <div className="rounded-lg border border-border bg-card p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-pillar-ai" />
-                <h2 className="text-base font-semibold">Template Library</h2>
-              </div>
-              <Link
-                href="/proposals/templates"
-                className="text-xs text-muted-foreground hover:text-foreground"
-              >
-                View All
-              </Link>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              <p className="text-sm text-muted-foreground">
-                7 proposal templates ready. Connect Supabase to load them.
-              </p>
-            </div>
-          </div>
-        </div>
+          <TabsContent value="generator" className="mt-6">
+            <ProposalGenerator
+              templates={generatorTemplates}
+              platforms={PLATFORM_OPTIONS}
+            />
+          </TabsContent>
+        </Tabs>
       </PageContainer>
     </>
   )
