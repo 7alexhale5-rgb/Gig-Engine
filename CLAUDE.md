@@ -2,6 +2,28 @@
 
 > AI assistant guide for developing the PrettyFly Gig Economy Acquisition Engine.
 
+## Current State (as of scaffold commit)
+
+**Phase 1 scaffold is COMPLETE.** The full filesystem, database schema, UI shell, and all 13 routes compile and render. Next work: connect Supabase (fill `.env.local`), then build Phase 2 (Pipeline CRUD + Kanban DnD).
+
+### What's Built
+- 88 source files across 13 App Router routes
+- 14 SQL migrations (11 tables + seed + triggers + RLS)
+- 25 React components (13 UI + 3 layout + 4 dashboard + 5 shared)
+- 5 custom hooks, 3 utility modules, 4 seed data files
+- Dark mode by default, pillar color system throughout
+- Build verified: `npm run build` passes all routes
+
+### What's NOT Built Yet
+- Supabase connection (needs `.env.local` values)
+- Drag-and-drop on Kanban (wired for @dnd-kit, not connected)
+- Recharts visualizations (placeholder containers ready)
+- Form validation (React Hook Form + Zod schemas not yet wired)
+- AI proposal generation (Edge Function not yet created)
+- Auth flow (Supabase Auth not yet integrated)
+
+---
+
 ## Project Overview
 
 **Name:** prettyfly-acquisition-engine
@@ -11,6 +33,28 @@
 A centralized operations platform for managing, tracking, and optimizing freelance project acquisition across multiple gig economy platforms (Upwork, Fiverr, Toptal, Arc.dev, and others). Consolidates listing management, proposal tracking, delivery pipelines, and revenue analytics into one command center.
 
 **Core problem:** Managing freelance operations across 4+ platforms creates fragmentation — scattered proposals, no unified pipeline view, manual gig performance tracking, disconnected delivery workflows, and zero visibility into which platforms/gig types drive the most revenue per hour invested.
+
+---
+
+## Quick Start
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Copy env template and fill in Supabase credentials
+cp .env.local.example .env.local
+
+# 3. Start Supabase locally (or connect to hosted project)
+npx supabase start
+npx supabase db push
+
+# 4. Generate TypeScript types from your running DB
+npm run db:generate-types
+
+# 5. Run dev server
+npm run dev
+```
 
 ---
 
@@ -29,65 +73,129 @@ A centralized operations platform for managing, tracking, and optimizing freelan
 | Auth           | Supabase email auth (single user for MVP)     |
 | Project Mgmt   | Linear                                        |
 
+### Installed Packages (package.json)
+**Runtime:** next@14, react, react-dom, @supabase/supabase-js, @supabase/ssr, @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities, recharts, date-fns, react-hook-form, @hookform/resolvers, zod, lucide-react, clsx, tailwind-merge, class-variance-authority
+**Dev:** typescript, @types/react, @types/react-dom, @types/node, eslint, eslint-config-next, prettier, tailwindcss@3, autoprefixer, postcss
+
 ---
 
-## Project Structure
+## Project Structure (Actual Files)
 
 ```
 prettyfly-acquisition-engine/
-├── CLAUDE.md                              # This file
+├── CLAUDE.md                              # This file — AI assistant guide
 ├── README.md
-├── package.json
+├── package.json                           # Scripts: dev, build, lint, format, db:*
 ├── next.config.js
-├── tailwind.config.ts
-├── tsconfig.json
-├── .env.local                             # Supabase keys, API keys (NEVER commit)
+├── tailwind.config.ts                     # Dark mode, pillar colors, shadcn vars
+├── tsconfig.json                          # Strict mode, @/* path alias
+├── components.json                        # shadcn/ui configuration
+├── postcss.config.js
+├── .eslintrc.json
+├── .env.local.example                     # Template for required env vars
+├── .gitignore
 ├── supabase/
-│   ├── config.toml
-│   └── migrations/                        # Numbered SQL migrations (001-012+)
+│   ├── config.toml                        # Supabase project config
+│   └── migrations/
+│       ├── 001_create_platforms.sql
+│       ├── 002_create_service_pillars.sql
+│       ├── 003_create_gig_listings.sql
+│       ├── 004_create_opportunities.sql
+│       ├── 005_create_proposal_templates.sql
+│       ├── 006_create_projects.sql
+│       ├── 007_create_portfolio_items.sql
+│       ├── 008_create_revenue_entries.sql
+│       ├── 009_create_daily_metrics.sql
+│       ├── 010_create_content_blocks.sql
+│       ├── 011_create_gig_versions.sql
+│       ├── 012_seed_initial_data.sql      # 8 platforms + 5 pillars
+│       ├── 013_add_updated_at_triggers.sql
+│       └── 014_enable_rls.sql             # RLS + permissive policies
 ├── src/
-│   ├── app/                               # Next.js App Router pages
-│   │   ├── layout.tsx                     # Root layout with sidebar nav
-│   │   ├── page.tsx                       # Dashboard home (key metrics)
-│   │   ├── globals.css
+│   ├── app/                               # Next.js App Router (13 routes)
+│   │   ├── layout.tsx                     # Root layout: dark mode, Sidebar shell
+│   │   ├── page.tsx                       # Dashboard home: metrics, targets, pipeline
+│   │   ├── globals.css                    # Tailwind + shadcn CSS variables
 │   │   ├── dashboard/page.tsx             # Revenue analytics dashboard
-│   │   ├── pipeline/                      # Kanban pipeline view + detail
-│   │   ├── proposals/                     # Proposal engine + template library
-│   │   ├── gigs/                          # Gig listing manager + detail/edit
-│   │   ├── projects/                      # Active delivery tracker + detail
-│   │   ├── portfolio/page.tsx             # Case study & content library
-│   │   ├── analytics/page.tsx             # Deep analytics & optimizer
-│   │   └── settings/page.tsx              # Platform profiles, preferences
+│   │   ├── pipeline/
+│   │   │   ├── page.tsx                   # Kanban + table view toggle
+│   │   │   └── [id]/page.tsx             # Opportunity detail
+│   │   ├── proposals/
+│   │   │   ├── page.tsx                   # Quick-fire generator + template sidebar
+│   │   │   └── templates/page.tsx         # Full template library
+│   │   ├── gigs/
+│   │   │   ├── page.tsx                   # Gig grid with pillar filters
+│   │   │   └── [id]/page.tsx             # Gig detail + version history
+│   │   ├── projects/
+│   │   │   ├── page.tsx                   # Active projects + status metrics
+│   │   │   └── [id]/page.tsx             # Project detail + checklists
+│   │   ├── portfolio/page.tsx             # Case studies + content blocks
+│   │   ├── analytics/page.tsx             # Deep analytics + recommendations
+│   │   └── settings/page.tsx              # Platform profiles + preferences
 │   ├── components/
-│   │   ├── ui/                            # shadcn/ui base components
-│   │   ├── layout/                        # Sidebar, Header, PageContainer
-│   │   ├── dashboard/                     # MetricCard, RevenueChart, etc.
-│   │   ├── pipeline/                      # KanbanBoard, OpportunityCard, etc.
-│   │   ├── proposals/                     # ProposalGenerator, QuickFirePanel
-│   │   ├── gigs/                          # GigCard, GigForm, PricingTierEditor
-│   │   ├── projects/                      # ProjectCard, DeliveryChecklist, TimeTracker
-│   │   ├── analytics/                     # RevenueBySeries, WinRateChart, etc.
-│   │   └── shared/                        # PlatformBadge, PillarBadge, StatusBadge
+│   │   ├── ui/                            # 13 shadcn-style base components
+│   │   │   ├── button.tsx                 # Variants: default/destructive/outline/secondary/ghost/link
+│   │   │   ├── card.tsx                   # Card, CardHeader, CardTitle, CardContent, etc.
+│   │   │   ├── badge.tsx                  # Variants: default/secondary/destructive/outline
+│   │   │   ├── input.tsx
+│   │   │   ├── label.tsx
+│   │   │   ├── textarea.tsx
+│   │   │   ├── separator.tsx
+│   │   │   ├── dialog.tsx                 # Portal-based dialog
+│   │   │   ├── table.tsx                  # Table, TableHeader, TableRow, etc.
+│   │   │   ├── tabs.tsx                   # Context-based tabs
+│   │   │   ├── select.tsx
+│   │   │   ├── dropdown-menu.tsx
+│   │   │   └── sheet.tsx                  # Side drawer
+│   │   ├── layout/
+│   │   │   ├── Sidebar.tsx                # Collapsible nav with lucide icons
+│   │   │   ├── Header.tsx                 # Page title, search, notifications
+│   │   │   ├── PageContainer.tsx          # Scrollable content wrapper
+│   │   │   └── index.ts
+│   │   ├── dashboard/
+│   │   │   ├── MetricCard.tsx             # KPI card with trend indicator
+│   │   │   ├── DailyTargets.tsx           # Progress bars for daily goals
+│   │   │   ├── PipelineSnapshot.tsx       # Stage counts overview
+│   │   │   ├── RevenueChart.tsx           # Recharts placeholder
+│   │   │   └── index.ts
+│   │   ├── shared/
+│   │   │   ├── PlatformBadge.tsx          # Color-coded platform badges
+│   │   │   ├── PillarBadge.tsx            # Pillar dot + color from constants
+│   │   │   ├── StatusBadge.tsx            # Universal status badge
+│   │   │   ├── DateRangePicker.tsx        # 7d/30d/90d toggle
+│   │   │   ├── SearchFilter.tsx           # Search input with icon
+│   │   │   └── index.ts
+│   │   ├── pipeline/                      # (empty — Phase 2: KanbanBoard, OpportunityCard)
+│   │   ├── proposals/                     # (empty — Phase 3: ProposalGenerator, QuickFirePanel)
+│   │   ├── gigs/                          # (empty — Phase 3: GigCard, GigForm, PricingTierEditor)
+│   │   ├── projects/                      # (empty — Phase 4: ProjectCard, DeliveryChecklist, TimeTracker)
+│   │   └── analytics/                     # (empty — Phase 4: RevenueBySeries, WinRateChart)
 │   ├── lib/
+│   │   ├── utils.ts                       # cn() — clsx + tailwind-merge helper
 │   │   ├── supabase/
-│   │   │   ├── client.ts                  # Browser Supabase client singleton
-│   │   │   ├── server.ts                  # Server-side Supabase client
-│   │   │   └── types.ts                   # Generated types from DB schema
+│   │   │   ├── client.ts                  # Browser client via createBrowserClient
+│   │   │   ├── server.ts                  # Server client via createServerClient + cookies
+│   │   │   └── types.ts                   # Database type stubs (regenerate after Supabase connect)
 │   │   ├── utils/
-│   │   │   ├── calculations.ts            # Revenue calcs, win rates, effective hourly
-│   │   │   ├── formatters.ts              # Currency, dates, percentages
-│   │   │   └── constants.ts               # Stage enums, pillar colors, platform configs
-│   │   └── hooks/                         # useOpportunities, useGigs, useRevenue, etc.
-│   └── data/                              # Seed data (TypeScript)
-│       ├── seed-platforms.ts
-│       ├── seed-pillars.ts
-│       ├── seed-templates.ts
-│       └── seed-gigs.ts
+│   │   │   ├── constants.ts               # Stages, statuses, pillar colors, labels
+│   │   │   ├── formatters.ts              # Currency, dates, percentages, hours
+│   │   │   └── calculations.ts            # Win rate, hourly rate, pipeline value, conversions
+│   │   └── hooks/
+│   │       ├── useOpportunities.ts        # CRUD + stage updates for pipeline
+│   │       ├── useGigs.ts                 # CRUD for gig listings
+│   │       ├── useRevenue.ts              # Revenue entries + summary aggregation
+│   │       ├── useProposals.ts            # Template CRUD + usage tracking
+│   │       └── useDailyMetrics.ts         # Daily KPI logging + retrieval
+│   └── data/
+│       ├── seed-platforms.ts              # 8 platforms with statuses
+│       ├── seed-pillars.ts                # 5 pillars with colors
+│       ├── seed-templates.ts              # 7 proposal templates with full text
+│       └── seed-gigs.ts                   # 10 priority gigs with 3-tier pricing
 └── docs/
-    ├── STRATEGY.md                        # Full strategic plan (reference)
-    ├── PLATFORM-GUIDES.md                 # Platform-specific optimization
+    ├── STRATEGY.md                        # 90-day revenue plan
+    ├── PLATFORM-GUIDES.md                 # Upwork, Fiverr, Toptal optimization
     ├── PROPOSAL-TEMPLATES.md              # Full proposal template library
-    └── GIG-COPY.md                        # Gig listing copy (drafts + finals)
+    └── GIG-COPY.md                        # Gig listing copy + pricing tiers
 ```
 
 ---
@@ -185,60 +293,80 @@ npm run dev
 npm run build
 
 # Run Supabase locally
-npx supabase start
+npm run db:start     # npx supabase start
 
 # Run migrations
-npx supabase db push
+npm run db:push      # npx supabase db push
 
-# Generate TypeScript types from DB schema
-npx supabase gen types typescript --local > src/lib/supabase/types.ts
+# Reset database (drops + re-runs all migrations)
+npm run db:reset     # npx supabase db reset
+
+# Generate TypeScript types from running DB
+npm run db:generate-types
 
 # Lint
 npm run lint
 
 # Format
-npx prettier --write .
+npm run format       # npx prettier --write .
 ```
+
+### Build Verification
+Always run `npm run build` before committing. The project must compile with zero errors. ESLint warnings about `useEslintrc` are expected (Next.js 14 + ESLint 9 version mismatch) and can be ignored.
+
+### Font Note
+The project uses system fonts (`font-sans`) instead of Google Fonts to avoid build failures in restricted network environments. If you need Inter, install it as a local font package instead of using `next/font/google`.
 
 ---
 
 ## Implementation Phases
 
-### Phase 1: Foundation
-- Next.js + Tailwind + shadcn/ui scaffold
-- Supabase project, schema migrations, seed data
-- Supabase Auth (single user)
-- Layout shell: sidebar, header, page container
-- Dashboard home with metric cards from Supabase
+### Phase 1: Foundation --- COMPLETE
+- [x] Next.js 14 + Tailwind + shadcn/ui scaffold
+- [x] Supabase schema migrations (14 files) + seed data
+- [x] Layout shell: collapsible sidebar, header, page container
+- [x] Dashboard home with metric cards + daily targets + pipeline snapshot
+- [x] All 13 routes created with appropriate UI
+- [x] Shared components (badges, filters, date picker)
+- [x] Custom hooks + utility modules
+- [x] Docs directory (strategy, platform guides, templates, gig copy)
+- [ ] Supabase Auth (single user) — needs `.env.local` connection
+- [ ] Wire dashboard metric cards to live Supabase data
 
-### Phase 2: Core Pipeline
-- Opportunity CRUD
-- Kanban board with @dnd-kit drag-and-drop
-- Opportunity detail page
-- Pipeline filtering
-- Basic proposal template management
+### Phase 2: Core Pipeline --- NEXT
+- [ ] Connect `.env.local` to Supabase project
+- [ ] Wire `useOpportunities` hook to real data
+- [ ] Opportunity CRUD (create/edit forms with Zod validation)
+- [ ] Kanban board with @dnd-kit drag-and-drop (stage updates)
+- [ ] Opportunity detail page form
+- [ ] Pipeline filtering (by platform, pillar, stage)
+- [ ] Supabase real-time subscription for pipeline updates
+- [ ] Basic proposal template management CRUD
 
 ### Phase 3: Gig Manager + Proposals
-- Gig listing CRUD with version history
-- Pricing tier editor
-- Proposal template library with AI generation
-- Quick-fire proposal mode
-- Content block library
+- [ ] Gig listing CRUD with version history
+- [ ] 3-tier pricing editor component (PricingTierEditor)
+- [ ] Proposal template library with AI generation (Edge Function)
+- [ ] Quick-fire proposal mode with clipboard integration
+- [ ] Content block library CRUD
+- [ ] Cross-platform gig duplication
 
 ### Phase 4: Delivery + Analytics
-- Project tracker with checklists
-- Time tracking
-- Revenue entry management
-- Analytics dashboard with Recharts
-- Daily metrics logging
+- [ ] Project tracker with milestone checklists
+- [ ] Time tracking per project (time_entries_json)
+- [ ] Revenue entry management + aggregation
+- [ ] Analytics dashboard with Recharts (bar, line, pie charts)
+- [ ] Daily metrics logging and retrieval
+- [ ] Effective hourly rate calculations
 
 ### Phase 5: Polish + Automation
-- Review request workflow triggers
-- Retainer conversion tracking
-- Performance recommendation engine
-- CSV export for revenue data
-- Notification system for deadlines
-- Vercel deployment
+- [ ] Supabase Auth integration + route protection
+- [ ] Review request workflow triggers
+- [ ] Retainer conversion tracking
+- [ ] Performance recommendation engine
+- [ ] CSV export for revenue data
+- [ ] Notification system for deadlines
+- [ ] Vercel deployment + production environment
 
 ---
 
@@ -351,3 +479,48 @@ The operator (Alex) is a CTO and founder with expertise in automation, AI, CRM s
 - Do not skip Zod validation on forms - every form needs a schema
 - Do not use CSS-in-JS solutions - Tailwind only
 - Do not create light-mode-only designs - dark mode is the default and primary theme
+- Do not use `next/font/google` - system fonts only (network restrictions)
+- Do not create new migrations without incrementing the sequence number (check existing max)
+- Do not modify `src/lib/supabase/types.ts` manually - it should be regenerated from the DB schema via `npm run db:generate-types`
+
+---
+
+## Development Session Guide
+
+### Starting a New Session
+1. Read this file first to understand current state
+2. Check `git log --oneline -10` to see recent progress
+3. Pick the next unchecked item from the current phase above
+4. Commit frequently — checkpoint before any multi-file refactors
+
+### Key Architectural Decisions Already Made
+- **Sidebar is client component** (`"use client"`) — uses `usePathname` for active state and `useState` for collapse
+- **Pages are server components by default** — only add `"use client"` when the page itself needs interactivity (pipeline, gigs, proposals have it for filters/view toggles)
+- **UI components use class-variance-authority** for variant management (button, badge)
+- **Hooks pattern:** Each domain hook (useOpportunities, useGigs, etc.) manages its own state and Supabase queries. They use `createClient()` from `@/lib/supabase/client` (browser-side).
+- **Pillar colors flow through constants.ts** → components read from `PILLAR_COLORS` record or `SERVICE_PILLARS` array. Tailwind config also has `pillar.*` colors for use in classes.
+- **Dashboard uses server-imported components** — MetricCard, PipelineSnapshot are server-compatible; RevenueChart is client (will use Recharts)
+
+### File Conventions to Follow
+| Pattern | Example | When |
+|---------|---------|------|
+| `"use client"` at top | `src/app/pipeline/page.tsx` | Page has interactivity (state, handlers) |
+| No directive | `src/app/dashboard/page.tsx` | Server component (data fetching, no state) |
+| Hook returns `{ data, loading, fn }` | `useOpportunities.ts` | All custom hooks follow this shape |
+| `cn()` for conditional classes | `cn("base", condition && "extra")` | Every component with dynamic styles |
+| Barrel exports via `index.ts` | `components/layout/index.ts` | Each component directory has one |
+
+### How to Add a New Feature
+1. **Migration first** — if it needs new DB columns/tables, create `0XX_description.sql`
+2. **Types** — regenerate types or add to the stub in `types.ts`
+3. **Hook** — add or extend the relevant domain hook
+4. **Component** — build in the appropriate `components/` subdirectory
+5. **Page** — wire into the App Router page
+6. **Test** — verify with `npm run build` (no test runner yet)
+
+### Supabase Connection Checklist (for Phase 2 kickoff)
+1. Create Supabase project at supabase.com (or run locally)
+2. Run all 14 migrations: `npx supabase db push`
+3. Copy project URL and anon key to `.env.local`
+4. Generate types: `npm run db:generate-types`
+5. Verify: open any page that uses a hook — should see empty state, not errors
