@@ -4,6 +4,8 @@ import { useState, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { Opportunity, OpportunityStage } from "@/lib/supabase/types"
 
+const supabase = createClient()
+
 interface OpportunityFilters {
   stage?: string
   platform_id?: string
@@ -13,7 +15,6 @@ interface OpportunityFilters {
 export function useOpportunities() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([])
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const fetchOpportunities = useCallback(
     async (filters?: OpportunityFilters) => {
@@ -45,7 +46,7 @@ export function useOpportunities() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const createOpportunity = useCallback(
@@ -71,7 +72,7 @@ export function useOpportunities() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const updateOpportunity = useCallback(
@@ -98,7 +99,7 @@ export function useOpportunities() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   /**
@@ -129,7 +130,7 @@ export function useOpportunities() {
         throw err
       }
     },
-    [supabase, fetchOpportunities]
+    [fetchOpportunities]
   )
 
   return {

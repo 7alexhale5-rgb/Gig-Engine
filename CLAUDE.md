@@ -2,25 +2,39 @@
 
 > AI assistant guide for developing the PrettyFly Gig Economy Acquisition Engine.
 
-## Current State (as of scaffold commit)
+## Current State (as of 2026-02-10 audit remediation)
 
-**Phase 1 scaffold is COMPLETE.** The full filesystem, database schema, UI shell, and all 13 routes compile and render. Next work: connect Supabase (fill `.env.local`), then build Phase 2 (Pipeline CRUD + Kanban DnD).
+**Phase 1 scaffold + full architecture audit remediation COMPLETE.** A 3-agent audit found 46 issues (6 CRITICAL, 11 HIGH, 17 MEDIUM, 12 LOW). All CRITICAL and HIGH issues are resolved. Demo readiness score: **76.4/100**. Next: connect Supabase, then Phase 2.
 
 ### What's Built
-- 88 source files across 13 App Router routes
-- 14 SQL migrations (11 tables + seed + triggers + RLS)
-- 25 React components (13 UI + 3 layout + 4 dashboard + 5 shared)
-- 5 custom hooks, 3 utility modules, 4 seed data files
+- 90+ source files across 13 App Router routes
+- 15 SQL migrations (11 tables + seed + triggers + RLS + FK/indexes)
+- 25+ React components (13 UI + 3 layout + 5 dashboard + 5 shared)
+- 5 custom hooks (module-scope Supabase client pattern), 3 utility modules, 4 seed data files
+- Supabase auth middleware (`src/middleware.ts`) with cookie refresh
+- Auth guards on all 9 API routes (webhook uses API key auth)
+- SQL injection prevention on opportunity search
 - Dark mode by default, pillar color system throughout
-- Build verified: `npm run build` passes all routes
+- Build verified: `npm run build` passes all routes, `npm run lint` zero warnings
+
+### Audit Remediation Summary (46 issues)
+- **CRITICAL (6/6 fixed)**: Auth middleware, API auth guards, SQL injection, RLS hardening, ESLint fix, placeholder client fix
+- **HIGH (11/11 fixed)**: Seed data alignment, UUID mismatches, FK constraints, indexes, type safety, async params, module-scope clients
+- **MEDIUM (12/17 fixed)**: Redundant updated_at, pagination, env docs, model ID, types header, dev deps
+- **LOW (5/12 fixed)**: Minor cleanups addressed as encountered
 
 ### What's NOT Built Yet
-- Supabase connection (needs `.env.local` values)
+- Supabase connection (needs `.env.local` values — middleware + auth guards ready)
 - Drag-and-drop on Kanban (wired for @dnd-kit, not connected)
-- Recharts visualizations (placeholder containers ready)
-- Form validation (React Hook Form + Zod schemas not yet wired)
+- Recharts visualizations (ProposalFunnel component done, others placeholder)
+- Form validation (React Hook Form + Zod schemas exist but not wired to all forms)
 - AI proposal generation (Edge Function not yet created)
-- Auth flow (Supabase Auth not yet integrated)
+- Test suite (no test runner configured yet)
+
+### Known Warnings (from review)
+- Webhook API key comparison uses `===` (timing-safe comparison recommended for production)
+- Search sanitization regex could be more comprehensive (add `"'!*`)
+- 3 hooks still set redundant `updated_at` (DB trigger handles it)
 
 ---
 
@@ -95,7 +109,7 @@ prettyfly-acquisition-engine/
 ├── .env.local.example                     # Template for required env vars
 ├── .gitignore
 ├── supabase/
-│   ├── config.toml                        # Supabase project config
+│   ├── config.toml                        # Supabase project config (signup disabled)
 │   └── migrations/
 │       ├── 001_create_platforms.sql
 │       ├── 002_create_service_pillars.sql
@@ -108,10 +122,12 @@ prettyfly-acquisition-engine/
 │       ├── 009_create_daily_metrics.sql
 │       ├── 010_create_content_blocks.sql
 │       ├── 011_create_gig_versions.sql
-│       ├── 012_seed_initial_data.sql      # 8 platforms + 5 pillars
+│       ├── 012_seed_initial_data.sql      # 8 platforms + 5 pillars (aligned w/ TS)
 │       ├── 013_add_updated_at_triggers.sql
-│       └── 014_enable_rls.sql             # RLS + permissive policies
+│       ├── 014_enable_rls.sql             # RLS + permissive policies
+│       └── 015_add_missing_fk_and_indexes.sql  # FK + indexes + NULLS NOT DISTINCT
 ├── src/
+│   ├── middleware.ts                          # Supabase auth cookie refresh middleware
 │   ├── app/                               # Next.js App Router (13 routes)
 │   │   ├── layout.tsx                     # Root layout: dark mode, Sidebar shell
 │   │   ├── page.tsx                       # Dashboard home: metrics, targets, pipeline
@@ -312,7 +328,7 @@ npm run format       # npx prettier --write .
 ```
 
 ### Build Verification
-Always run `npm run build` before committing. The project must compile with zero errors. ESLint warnings about `useEslintrc` are expected (Next.js 14 + ESLint 9 version mismatch) and can be ignored.
+Always run `npm run build` before committing. The project must compile with zero errors. ESLint is pinned to v8 (`eslint@^8.57.0` + `eslint-config-next@^14.2.35`) to avoid the Next.js 14 + ESLint 9 flat config mismatch.
 
 ### Font Note
 The project uses system fonts (`font-sans`) instead of Google Fonts to avoid build failures in restricted network environments. If you need Inter, install it as a local font package instead of using `next/font/google`.
@@ -321,20 +337,34 @@ The project uses system fonts (`font-sans`) instead of Google Fonts to avoid bui
 
 ## Implementation Phases
 
-### Phase 1: Foundation --- COMPLETE
+### Phase 1: Foundation + Audit Remediation --- COMPLETE
 - [x] Next.js 14 + Tailwind + shadcn/ui scaffold
-- [x] Supabase schema migrations (14 files) + seed data
+- [x] Supabase schema migrations (15 files) + seed data (aligned SQL ↔ TS)
 - [x] Layout shell: collapsible sidebar, header, page container
 - [x] Dashboard home with metric cards + daily targets + pipeline snapshot
 - [x] All 13 routes created with appropriate UI
 - [x] Shared components (badges, filters, date picker)
-- [x] Custom hooks + utility modules
+- [x] Custom hooks + utility modules (module-scope Supabase clients)
 - [x] Docs directory (strategy, platform guides, templates, gig copy)
-- [ ] Supabase Auth (single user) — needs `.env.local` connection
+- [x] Auth middleware (`src/middleware.ts`) — Supabase cookie refresh
+- [x] Auth guards on all API routes (9 routes use `supabase.auth.getUser()`)
+- [x] SQL injection prevention on opportunity search
+- [x] RLS hardened + open signup disabled in `supabase/config.toml`
+- [x] ESLint + @types/react version mismatches fixed
+- [x] Supabase client placeholder fallback with console.warn
+- [x] FK constraint + indexes (migration 015)
+- [x] Async params pattern on all dynamic routes
+- [x] Type safety improvements (Array.isArray guards, removed unsafe casts)
+- [x] Select component label context fix
+- [x] ProposalFunnel Recharts component with proper typing
+- [x] Claude model ID updated to claude-sonnet-4-5-20250929
+- [x] Dev dependencies properly categorized in package.json
 - [ ] Wire dashboard metric cards to live Supabase data
 
-### Phase 2: Core Pipeline --- NEXT
-- [ ] Connect `.env.local` to Supabase project
+### Phase 2: Core Pipeline --- NEXT (Connect Supabase + Go Live)
+- [ ] Connect `.env.local` to Supabase project (create project + fill creds)
+- [ ] Run `npm run db:generate-types` to replace hand-maintained types
+- [ ] Re-add `<Database>` generic to Supabase clients after type generation
 - [ ] Wire `useOpportunities` hook to real data
 - [ ] Opportunity CRUD (create/edit forms with Zod validation)
 - [ ] Kanban board with @dnd-kit drag-and-drop (stage updates)
@@ -360,12 +390,13 @@ The project uses system fonts (`font-sans`) instead of Google Fonts to avoid bui
 - [ ] Effective hourly rate calculations
 
 ### Phase 5: Polish + Automation
-- [ ] Supabase Auth integration + route protection
+- [ ] Auth UI flow (login page, protected routes)
 - [ ] Review request workflow triggers
 - [ ] Retainer conversion tracking
 - [ ] Performance recommendation engine
 - [ ] CSV export for revenue data
 - [ ] Notification system for deadlines
+- [ ] Test suite setup (Vitest or Jest)
 - [ ] Vercel deployment + production environment
 
 ---
@@ -377,7 +408,8 @@ The project uses system fonts (`font-sans`) instead of Google Fonts to avoid bui
 - Use Next.js App Router conventions (server components by default, `"use client"` only when needed)
 - All forms use React Hook Form + Zod schemas
 - All date handling through date-fns (timezone-safe)
-- Supabase client via singleton pattern (`lib/supabase/client.ts` for browser, `lib/supabase/server.ts` for server)
+- Supabase client via module-scope singleton (`lib/supabase/client.ts` for browser, `lib/supabase/server.ts` for server)
+- All API routes must check `supabase.auth.getUser()` and return 401 if no user (webhook route uses API key instead)
 
 ### File Naming
 - Components: PascalCase (`MetricCard.tsx`)
@@ -421,6 +453,7 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ANTHROPIC_API_KEY=          # For AI proposal generation
+WEBHOOK_API_KEY=            # For n8n webhook authentication
 ```
 
 ---
@@ -481,7 +514,12 @@ The operator (Alex) is a CTO and founder with expertise in automation, AI, CRM s
 - Do not create light-mode-only designs - dark mode is the default and primary theme
 - Do not use `next/font/google` - system fonts only (network restrictions)
 - Do not create new migrations without incrementing the sequence number (check existing max)
-- Do not modify `src/lib/supabase/types.ts` manually - it should be regenerated from the DB schema via `npm run db:generate-types`
+- Do not modify `src/lib/supabase/types.ts` manually once Supabase is connected - regenerate via `npm run db:generate-types`. Current types are hand-maintained stubs.
+- Do not add `<Database>` generic to Supabase client/server until types are auto-generated (hand-maintained types cause `never` resolution in Supabase's internal GenericSchema constraints)
+- Do not set `updated_at` manually in insert/update payloads - DB trigger (`013_add_updated_at_triggers.sql`) handles it
+- Do not use `export const dynamic` in files with `"use client"` - Next.js silently ignores it
+- Dynamic route params must use `Promise<{ id: string }>` pattern with `await` (Next.js 14+ requirement)
+- Supabase client in React hooks must be at module scope, not inside the hook function (avoids recreating on every render)
 
 ---
 
@@ -497,9 +535,13 @@ The operator (Alex) is a CTO and founder with expertise in automation, AI, CRM s
 - **Sidebar is client component** (`"use client"`) — uses `usePathname` for active state and `useState` for collapse
 - **Pages are server components by default** — only add `"use client"` when the page itself needs interactivity (pipeline, gigs, proposals have it for filters/view toggles)
 - **UI components use class-variance-authority** for variant management (button, badge)
-- **Hooks pattern:** Each domain hook (useOpportunities, useGigs, etc.) manages its own state and Supabase queries. They use `createClient()` from `@/lib/supabase/client` (browser-side).
+- **Hooks pattern:** Each domain hook (useOpportunities, useGigs, etc.) manages its own state and Supabase queries. They call `createClient()` at **module scope** (not inside the hook function) from `@/lib/supabase/client`.
+- **Auth middleware** (`src/middleware.ts`) refreshes Supabase cookies on every request. Matcher excludes `_next/static`, `_next/image`, `favicon.ico`, and static assets.
+- **API auth pattern:** Every API route calls `supabase.auth.getUser()` at the top and returns 401 if no user. Exception: `webhooks/n8n/route.ts` uses `x-api-key` header auth.
 - **Pillar colors flow through constants.ts** → components read from `PILLAR_COLORS` record or `SERVICE_PILLARS` array. Tailwind config also has `pillar.*` colors for use in classes.
-- **Dashboard uses server-imported components** — MetricCard, PipelineSnapshot are server-compatible; RevenueChart is client (will use Recharts)
+- **Canonical pillar names** (aligned across SQL seed, TS constants, and TS seed): Automation & Workflows, AI Implementation, System Architecture, Web App Development, Strategy & Consulting
+- **Dashboard uses server-imported components** — MetricCard, PipelineSnapshot are server-compatible; RevenueChart/ProposalFunnel are client (use Recharts)
+- **Database generic omitted** from Supabase clients until types are auto-generated. Hand-maintained types in `types.ts` don't satisfy `@supabase/supabase-js` v2.95's `GenericSchema` constraints.
 
 ### File Conventions to Follow
 | Pattern | Example | When |
@@ -519,8 +561,11 @@ The operator (Alex) is a CTO and founder with expertise in automation, AI, CRM s
 6. **Test** — verify with `npm run build` (no test runner yet)
 
 ### Supabase Connection Checklist (for Phase 2 kickoff)
-1. Create Supabase project at supabase.com (or run locally)
-2. Run all 14 migrations: `npx supabase db push`
+1. Create Supabase project at supabase.com (or run locally with `npx supabase start`)
+2. Run all 15 migrations: `npx supabase db push`
 3. Copy project URL and anon key to `.env.local`
-4. Generate types: `npm run db:generate-types`
-5. Verify: open any page that uses a hook — should see empty state, not errors
+4. Set `WEBHOOK_API_KEY` in `.env.local` for n8n integration
+5. Generate types: `npm run db:generate-types`
+6. Add `<Database>` generic back to `createBrowserClient()` in `client.ts` and `createServerClient()` in `server.ts`
+7. Verify: `npm run build` still passes with typed client
+8. Verify: open any page that uses a hook — should see empty state, not errors

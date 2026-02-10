@@ -1,7 +1,5 @@
 "use client"
 
-export const dynamic = "force-dynamic"
-
 import { useEffect, useState, useCallback } from "react"
 import { Header, PageContainer } from "@/components/layout"
 import { GigCard } from "@/components/gigs"

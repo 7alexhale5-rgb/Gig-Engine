@@ -4,6 +4,8 @@ import { useState, useCallback, useMemo } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { RevenueEntry } from "@/lib/supabase/types"
 
+const supabase = createClient()
+
 interface DateRange {
   from: string // ISO date string (YYYY-MM-DD)
   to: string // ISO date string (YYYY-MM-DD)
@@ -18,7 +20,6 @@ interface RevenueSummary {
 export function useRevenue() {
   const [entries, setEntries] = useState<RevenueEntry[]>([])
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const fetchRevenue = useCallback(
     async (dateRange?: DateRange) => {
@@ -47,7 +48,7 @@ export function useRevenue() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const addEntry = useCallback(
@@ -74,7 +75,7 @@ export function useRevenue() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const summary: RevenueSummary = useMemo(() => {

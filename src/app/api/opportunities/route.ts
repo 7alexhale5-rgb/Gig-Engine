@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { opportunitySchema } from "@/lib/schemas"
 import type {
-  Opportunity,
   OpportunityWithRelations,
   OpportunityStage,
 } from "@/lib/supabase/types"
@@ -27,6 +26,10 @@ import type {
 export async function GET(req: NextRequest) {
   try {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { searchParams } = new URL(req.url)
 
     // Pagination
@@ -64,9 +67,12 @@ export async function GET(req: NextRequest) {
       query = query.eq("pillar_id", pillarId)
     }
     if (search) {
-      query = query.or(
-        `job_title.ilike.%${search}%,client_name.ilike.%${search}%`,
-      )
+      const sanitized = search.replace(/[%_\\(),.]/g, "")
+      if (sanitized) {
+        query = query.or(
+          `job_title.ilike.%${sanitized}%,client_name.ilike.%${sanitized}%`,
+        )
+      }
     }
 
     const { data, error, count } = await query
@@ -129,7 +135,7 @@ export async function POST(req: NextRequest) {
     const validated = result.data
 
     // Clean empty-string optional UUID fields to undefined for DB insert
-    const insertData: Record<string, unknown> = { ...validated }
+    const insertData = { ...validated } as Record<string, unknown>
     const uuidFields = [
       "pillar_id",
       "gig_id",
@@ -159,6 +165,10 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { data, error } = await supabase
       .from("opportunities")
       .insert(insertData)

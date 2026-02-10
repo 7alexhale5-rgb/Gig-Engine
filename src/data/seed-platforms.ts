@@ -14,7 +14,7 @@ export const SEED_PLATFORMS: SeedPlatform[] = [
   {
     name: "Upwork",
     profile_url: "",
-    profile_status: "setup_needed",
+    profile_status: "active",
     headline:
       "Automation & AI Expert | GoHighLevel, n8n, Make | Custom Dashboards & Integrations",
     overview_text:
@@ -34,7 +34,7 @@ export const SEED_PLATFORMS: SeedPlatform[] = [
   {
     name: "Fiverr",
     profile_url: "",
-    profile_status: "setup_needed",
+    profile_status: "active",
     headline:
       "I will build automation workflows, AI chatbots, and custom dashboards",
     overview_text:
@@ -72,7 +72,7 @@ export const SEED_PLATFORMS: SeedPlatform[] = [
   {
     name: "Arc.dev",
     profile_url: "",
-    profile_status: "setup_needed",
+    profile_status: "application_pending",
     headline: "Full-Stack Developer | Automation & AI Specialist",
     overview_text:
       "Building intelligent automation systems and modern web applications. Deep expertise in workflow orchestration (n8n, Make), CRM platforms (GoHighLevel), and AI-powered business tools.",
@@ -89,7 +89,7 @@ export const SEED_PLATFORMS: SeedPlatform[] = [
   {
     name: "PeoplePerHour",
     profile_url: "",
-    profile_status: "planned",
+    profile_status: "setup_needed",
     headline:
       "Automation Expert | AI Chatbots | Custom Business Dashboards",
     overview_text:
@@ -106,7 +106,7 @@ export const SEED_PLATFORMS: SeedPlatform[] = [
   {
     name: "Guru",
     profile_url: "",
-    profile_status: "planned",
+    profile_status: "setup_needed",
     headline: "Business Automation & AI Integration Specialist",
     overview_text:
       "Delivering end-to-end automation solutions, from workflow design through implementation. Expertise in n8n, Make, GoHighLevel, and custom AI assistant development.",

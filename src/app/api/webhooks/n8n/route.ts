@@ -301,7 +301,6 @@ async function handleStageChange(
     .from("opportunities")
     .update({
       stage: new_stage,
-      updated_at: new Date().toISOString(),
     })
     .eq("id", opportunity_id)
     .select()

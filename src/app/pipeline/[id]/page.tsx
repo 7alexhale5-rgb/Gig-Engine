@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { use, useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Loader2 } from "lucide-react"
 import { Header } from "@/components/layout"
@@ -14,10 +14,11 @@ import type { Opportunity } from "@/lib/supabase/types"
 import type { OpportunityFormData } from "@/lib/schemas/opportunity"
 
 interface OpportunityDetailProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default function OpportunityDetail({ params }: OpportunityDetailProps) {
+  const { id } = use(params)
   const router = useRouter()
   const { opportunities, loading, fetchOpportunities, updateOpportunity } =
     useOpportunities()
@@ -30,10 +31,10 @@ export default function OpportunityDetail({ params }: OpportunityDetailProps) {
 
   useEffect(() => {
     if (opportunities.length > 0) {
-      const found = opportunities.find((o) => o.id === params.id) ?? null
+      const found = opportunities.find((o) => o.id === id) ?? null
       setOpportunity(found)
     }
-  }, [opportunities, params.id])
+  }, [opportunities, id])
 
   const handleUpdate = useCallback(
     async (data: OpportunityFormData) => {
@@ -91,7 +92,7 @@ export default function OpportunityDetail({ params }: OpportunityDetailProps) {
           <div className="mx-auto max-w-lg text-center">
             <p className="mb-4 text-sm text-muted-foreground">
               The opportunity with ID{" "}
-              <code className="rounded bg-muted px-1 py-0.5 text-xs">{params.id}</code>{" "}
+              <code className="rounded bg-muted px-1 py-0.5 text-xs">{id}</code>{" "}
               was not found.
             </p>
             <Button variant="outline" onClick={() => router.push("/pipeline")}>

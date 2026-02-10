@@ -1,7 +1,5 @@
 "use client"
 
-export const dynamic = "force-dynamic"
-
 import { useEffect, useMemo } from "react"
 import { Header, PageContainer } from "@/components/layout"
 import { ProposalGenerator, QuickFirePanel } from "@/components/proposals"
