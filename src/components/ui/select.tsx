@@ -7,17 +7,23 @@ import { cn } from "@/lib/utils"
 interface SelectContextValue {
   value: string
   onValueChange: (value: string) => void
+  label: string
+  onLabelChange: (label: string) => void
   open: boolean
   setOpen: (open: boolean) => void
   triggerRef: React.RefObject<HTMLButtonElement | null>
+  contentId: string
 }
 
 const SelectContext = React.createContext<SelectContextValue>({
   value: "",
   onValueChange: () => {},
+  label: "",
+  onLabelChange: () => {},
   open: false,
   setOpen: () => {},
   triggerRef: { current: null },
+  contentId: "",
 })
 
 interface SelectProps {
@@ -35,8 +41,10 @@ function Select({
 }: SelectProps) {
   const [uncontrolledValue, setUncontrolledValue] =
     React.useState(defaultValue)
+  const [label, setLabel] = React.useState("")
   const [open, setOpen] = React.useState(false)
   const triggerRef = React.useRef<HTMLButtonElement>(null)
+  const contentId = React.useId()
 
   const value =
     controlledValue !== undefined ? controlledValue : uncontrolledValue
@@ -50,7 +58,7 @@ function Select({
 
   return (
     <SelectContext.Provider
-      value={{ value, onValueChange: handleValueChange, open, setOpen, triggerRef }}
+      value={{ value, onValueChange: handleValueChange, label, onLabelChange: setLabel, open, setOpen, triggerRef, contentId }}
     >
       <div className="relative">{children}</div>
     </SelectContext.Provider>
@@ -65,7 +73,7 @@ const SelectTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, children, ...props }, ref) => {
-  const { open, setOpen, triggerRef } = useSelect()
+  const { open, setOpen, triggerRef, contentId } = useSelect()
 
   const combinedRef = React.useCallback(
     (node: HTMLButtonElement | null) => {
@@ -83,6 +91,7 @@ const SelectTrigger = React.forwardRef<
       type="button"
       role="combobox"
       aria-expanded={open}
+      aria-controls={contentId}
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
         className
@@ -116,11 +125,11 @@ interface SelectValueProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const SelectValue = React.forwardRef<HTMLSpanElement, SelectValueProps>(
   ({ placeholder, className, ...props }, ref) => {
-    const { value } = useSelect()
+    const { value, label } = useSelect()
 
     return (
       <span ref={ref} className={cn(className)} {...props}>
-        {value || placeholder}
+        {label || value || placeholder}
       </span>
     )
   }
@@ -131,7 +140,7 @@ const SelectContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => {
-  const { open, setOpen } = useSelect()
+  const { open, setOpen, contentId } = useSelect()
 
   React.useEffect(() => {
     if (!open) return
@@ -157,6 +166,7 @@ const SelectContent = React.forwardRef<
   return (
     <div
       ref={ref}
+      id={contentId}
       role="listbox"
       className={cn(
         "absolute z-50 mt-1 max-h-60 min-w-[8rem] w-full overflow-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
@@ -177,7 +187,7 @@ interface SelectItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
   ({ className, children, value, disabled = false, ...props }, ref) => {
-    const { value: selectedValue, onValueChange, setOpen } = useSelect()
+    const { value: selectedValue, onValueChange, onLabelChange, setOpen } = useSelect()
     const isSelected = selectedValue === value
 
     return (
@@ -194,6 +204,7 @@ const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
         onClick={() => {
           if (!disabled) {
             onValueChange(value)
+            onLabelChange(typeof children === 'string' ? children : value)
             setOpen(false)
           }
         }}

@@ -20,6 +20,10 @@ export async function GET(req: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
 
     const { data, error } = await supabase
       .from("opportunities")
@@ -65,6 +69,11 @@ export async function GET(req: NextRequest, context: RouteContext) {
 export async function PATCH(req: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const body: unknown = await req.json()
 
     // Partial validation — allow subset of fields
@@ -88,7 +97,7 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     const validated = result.data
 
     // Clean empty-string optional UUID fields to null for DB update
-    const updateData: Record<string, unknown> = { ...validated }
+    const updateData = { ...validated } as Record<string, unknown>
     const uuidFields = [
       "pillar_id",
       "gig_id",
@@ -100,10 +109,6 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
       }
     }
 
-    // Set updated_at
-    updateData.updated_at = new Date().toISOString()
-
-    const supabase = await createClient()
     const { data, error } = await supabase
       .from("opportunities")
       .update(updateData)
@@ -149,6 +154,10 @@ export async function DELETE(req: NextRequest, context: RouteContext) {
   try {
     const { id } = await context.params
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
 
     const { data, error } = await supabase
       .from("opportunities")

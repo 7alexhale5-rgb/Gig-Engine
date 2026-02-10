@@ -35,14 +35,17 @@ const STATUS_INDICATOR_COLORS: Record<ProjectStatus, string> = {
 // ---------------------------------------------------------------------------
 
 function parseMilestones(raw: Record<string, unknown>[]): Milestone[] {
+  if (!Array.isArray(raw)) return []
   return raw as unknown as Milestone[]
 }
 
 function parseChecklist(raw: Record<string, unknown>[]): ChecklistItem[] {
+  if (!Array.isArray(raw)) return []
   return raw as unknown as ChecklistItem[]
 }
 
 function parseTimeEntries(raw: Record<string, unknown>[]): TimeEntry[] {
+  if (!Array.isArray(raw)) return []
   return raw as unknown as TimeEntry[]
 }
 

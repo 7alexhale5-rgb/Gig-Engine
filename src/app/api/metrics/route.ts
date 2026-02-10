@@ -20,6 +20,10 @@ import type { DailyMetrics } from "@/lib/supabase/types"
 export async function GET(req: NextRequest) {
   try {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { searchParams } = new URL(req.url)
 
     const from = searchParams.get("from")
@@ -41,7 +45,7 @@ export async function GET(req: NextRequest) {
       query = query.eq("platform_id", platformId)
     }
 
-    const { data, error } = await query
+    const { data, error } = await query.limit(500)
 
     if (error) {
       console.error("Failed to fetch daily metrics:", error)
@@ -95,12 +99,16 @@ export async function POST(req: NextRequest) {
     const validated = result.data
 
     // Clean empty-string platform_id to undefined for DB upsert
-    const upsertData: Record<string, unknown> = { ...validated }
+    const upsertData = { ...validated } as Record<string, unknown>
     if (upsertData.platform_id === "") {
       delete upsertData.platform_id
     }
 
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { data, error } = await supabase
       .from("daily_metrics")
       .upsert(upsertData, { onConflict: "date,platform_id" })

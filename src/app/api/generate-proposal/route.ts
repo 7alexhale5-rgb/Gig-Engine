@@ -83,6 +83,12 @@ interface ProposalResponse {
  */
 export async function POST(req: NextRequest) {
   try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
     const body: unknown = await req.json()
 
     // Validate input
@@ -107,7 +113,6 @@ export async function POST(req: NextRequest) {
     let templateText: string | null = null
     let templateName: string | null = null
     if (input.template_id && input.template_id !== "") {
-      const supabase = await createClient()
       const { data: template, error: templateError } = await supabase
         .from("proposal_templates")
         .select("name, template_text")
@@ -153,7 +158,7 @@ export async function POST(req: NextRequest) {
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-5-20250929",
           max_tokens: Math.min(input.max_words * 3, 4096),
           system: systemPrompt,
           messages: [{ role: "user", content: userMessage }],

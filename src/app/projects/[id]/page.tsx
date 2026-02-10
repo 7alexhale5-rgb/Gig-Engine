@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { use, useState } from "react"
 import { Header, PageContainer } from "@/components/layout"
 import { DeliveryChecklist, MilestoneTracker, TimeTracker, CommunicationLog } from "@/components/projects"
 import { Button } from "@/components/ui/button"
@@ -12,10 +12,11 @@ import { useRouter } from "next/navigation"
 import type { Project, ChecklistItem, Milestone as MilestoneType, TimeEntry, CommunicationLog as CommLogType } from "@/lib/supabase/types"
 
 interface ProjectDetailProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default function ProjectDetail({ params }: ProjectDetailProps) {
+  const { id } = use(params)
   const router = useRouter()
 
   // Placeholder data until Supabase is connected
@@ -48,7 +49,7 @@ export default function ProjectDetail({ params }: ProjectDetailProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Project: {params.id.slice(0, 8)}...</CardTitle>
+              <CardTitle>Project: {id.slice(0, 8)}...</CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
               Connect Supabase to load project details.

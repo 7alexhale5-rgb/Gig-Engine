@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic"
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { revenueSchema } from "@/lib/schemas"
-import type { RevenueEntry, RevenueEntryWithRelations } from "@/lib/supabase/types"
+import type { RevenueEntryWithRelations } from "@/lib/supabase/types"
 
 // ---------------------------------------------------------------------------
 // GET /api/revenue
@@ -24,6 +24,10 @@ import type { RevenueEntry, RevenueEntryWithRelations } from "@/lib/supabase/typ
 export async function GET(req: NextRequest) {
   try {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { searchParams } = new URL(req.url)
 
     // Pagination
@@ -130,7 +134,7 @@ export async function POST(req: NextRequest) {
     const validated = result.data
 
     // Clean empty-string optional UUID fields to undefined
-    const insertData: Record<string, unknown> = { ...validated }
+    const insertData = { ...validated } as Record<string, unknown>
     const uuidFields = ["platform_id", "pillar_id", "opportunity_id"] as const
     for (const field of uuidFields) {
       if (insertData[field] === "") {
@@ -139,6 +143,10 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { data, error } = await supabase
       .from("revenue_entries")
       .insert(insertData)

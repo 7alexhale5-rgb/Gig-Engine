@@ -104,28 +104,28 @@ export const SERVICE_PILLARS: ServicePillarDefinition[] = [
       "n8n, Make, and Zapier workflow builds. Business-process automation, data pipelines, and system integrations that eliminate manual tasks.",
   },
   {
-    name: "AI & Chatbots",
+    name: "AI Implementation",
     color: "#8B5CF6",
     description:
       "Custom AI assistants, chatbot implementations, RAG pipelines, and intelligent automation using OpenAI, Anthropic, and open-source LLMs.",
   },
   {
-    name: "CRM & GoHighLevel",
+    name: "System Architecture",
     color: "#10B981",
     description:
-      "GoHighLevel setup, CRM migrations, marketing-automation funnels, and client-management system builds for agencies and small businesses.",
+      "CRM setup, GoHighLevel migrations, technical audits, system design, and infrastructure planning for agencies and small businesses.",
   },
   {
-    name: "Dashboards & Analytics",
+    name: "Web App Development",
     color: "#F59E0B",
     description:
-      "Custom reporting dashboards, data visualization, KPI tracking systems, and analytics integrations using modern web frameworks.",
+      "Custom reporting dashboards, landing pages, client portals, and web application MVPs built with Next.js and modern tooling.",
   },
   {
-    name: "Web & Landing Pages",
+    name: "Strategy & Consulting",
     color: "#EF4444",
     description:
-      "High-converting landing pages, business websites, client portals, and web application MVPs built with Next.js and modern tooling.",
+      "Process mapping, fractional CTO advisory, digital strategy, architecture reviews, and technical consulting services.",
   },
 ]
 

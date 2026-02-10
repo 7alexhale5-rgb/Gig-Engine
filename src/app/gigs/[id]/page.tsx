@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { use, useEffect, useState, useCallback } from "react"
 import { Header, PageContainer } from "@/components/layout"
 import { GigForm, GigVersionHistory, GigPerformanceStats } from "@/components/gigs"
 import { CardSkeleton } from "@/components/shared"
@@ -24,14 +24,15 @@ import {
 import type { GigListing } from "@/lib/supabase/types"
 
 interface GigDetailProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default function GigDetail({ params }: GigDetailProps) {
+  const { id } = use(params)
   const router = useRouter()
   const { gigs, loading, fetchGigs, updateGig } = useGigs()
   const [editing, setEditing] = useState(false)
-  const gig = gigs.find((g) => g.id === params.id)
+  const gig = gigs.find((g) => g.id === id)
 
   useEffect(() => {
     fetchGigs()
@@ -39,10 +40,10 @@ export default function GigDetail({ params }: GigDetailProps) {
 
   const handleUpdate = useCallback(
     async (data: Record<string, unknown>) => {
-      await updateGig(params.id, data as Partial<GigListing>)
+      await updateGig(id, data as Partial<GigListing>)
       setEditing(false)
     },
-    [params.id, updateGig]
+    [id, updateGig]
   )
 
   if (loading && !gig) {

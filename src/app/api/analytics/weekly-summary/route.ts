@@ -78,6 +78,10 @@ function pctChange(current: number, previous: number): number {
 export async function GET() {
   try {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const now = new Date()
 
     // Current week boundaries (Mon-Sun)
@@ -133,7 +137,8 @@ export async function GET() {
       // All opportunities for pipeline value
       supabase
         .from("opportunities")
-        .select("stage, contract_value"),
+        .select("stage, contract_value")
+        .limit(1000),
 
       // Revenue entries this week with gig listings for top gig
       supabase

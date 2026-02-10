@@ -75,6 +75,10 @@ const ACTIVE_STAGES: OpportunityStage[] = [
 export async function GET() {
   try {
     const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const now = new Date()
     const today = format(now, "yyyy-MM-dd")
     const weekStart = format(
@@ -105,7 +109,8 @@ export async function GET() {
       // 2. All opportunities (for pipeline value + stage distribution + win rate)
       supabase
         .from("opportunities")
-        .select("stage, contract_value, proposal_sent_at, contracted_at"),
+        .select("stage, contract_value, proposal_sent_at, contracted_at")
+        .limit(1000),
 
       // 3. Today's metrics (proposals sent today)
       supabase
