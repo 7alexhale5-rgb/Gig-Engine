@@ -1,0 +1,55 @@
+{
+  "project": "PrettyFly Gig Deployment Engine",
+  "slug": "gig-engine",
+  "created": "2026-02-10T00:00:00Z",
+  "phase": "handoff-ready",
+  "workflow": "jr-dev",
+  "pivot": "Document-driven content factory — NOT a web application",
+  "stack": {
+    "framework": "document-driven",
+    "language": "markdown",
+    "agents": "claude-code-custom-agents",
+    "tracking": "markdown-tables",
+    "deployment": "manual-platform-posting",
+    "monitoring": "mike-openclaw-heartbeat"
+  },
+  "agents": {
+    "foundation": ["architect"],
+    "content-generation": ["gig-generator"],
+    "proposal-generation": ["proposal-generator"],
+    "validate": ["copy-reviewer", "strategy-reviewer", "completeness-checker"],
+    "monitor": ["mike"]
+  },
+  "skills": [
+    "writing-clearly-and-concisely",
+    "brainstorming"
+  ],
+  "existing_assets": {
+    "strategy": "docs/STRATEGY.md",
+    "gig_copy": "docs/GIG-COPY.md",
+    "proposal_templates": "docs/PROPOSAL-TEMPLATES.md",
+    "platform_guides": "docs/PLATFORM-GUIDES.md",
+    "seed_pillars": "src/data/seed-pillars.ts",
+    "seed_platforms": "src/data/seed-platforms.ts",
+    "seed_gigs": "src/data/seed-gigs.ts"
+  },
+  "deliverables": {
+    "strategy_matrix": "strategy-matrix.md",
+    "listings_dir": "listings/",
+    "checklists_dir": "checklists/",
+    "tracker": "tracker.md"
+  },
+  "p1_targets": {
+    "fiverr_gigs": 6,
+    "upwork_listings": 8,
+    "total_content_pieces": 14
+  },
+  "revenue_targets": {
+    "monthly_goal": 25000,
+    "timeline_days": 90,
+    "fiverr_target": "5000-12000",
+    "upwork_target": "6000-20000",
+    "retainer_target": "3000-6000",
+    "premium_target": "2000-8000"
+  }
+}

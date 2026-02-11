@@ -35,3 +35,11 @@ next-env.d.ts
 
 # supabase
 .supabase/
+
+# Gig Monitor
+.env.monitor
+data/fiverr/
+data/upwork/
+data/reports/
+logs/
+playwright/.auth/

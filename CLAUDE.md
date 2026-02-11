@@ -1,26 +1,40 @@
-# CLAUDE.md - PrettyFly Acquisition Engine
+# CLAUDE.md - PrettyFly Gig Deployment Engine
 
-> AI assistant guide for developing the PrettyFly Gig Economy Acquisition Engine.
+> AI assistant guide for the PrettyFly Gig Deployment Engine — Strategy Engine + Content Factory + Automated Monitor.
 
-## Current State (as of scaffold commit)
+## Current State (2026-02-11)
 
-**Phase 1 scaffold is COMPLETE.** The full filesystem, database schema, UI shell, and all 13 routes compile and render. Next work: connect Supabase (fill `.env.local`), then build Phase 2 (Pipeline CRUD + Kanban DnD).
+**PROJECT PIVOTED** from full SaaS app to document-driven "Strategy Engine + Content Factory" approach. The old Next.js scaffold (`src/`, `supabase/`) is still in the repo but is NOT the active system. The active system is markdown listings + Node.js automation scripts.
 
-### What's Built
-- 88 source files across 13 App Router routes
-- 14 SQL migrations (11 tables + seed + triggers + RLS)
-- 25 React components (13 UI + 3 layout + 4 dashboard + 5 shared)
-- 5 custom hooks, 3 utility modules, 4 seed data files
-- Dark mode by default, pillar color system throughout
-- Build verified: `npm run build` passes all routes
+### What's Built & Active
+- **20 platform listings** ready to post (10 Fiverr, 10 Upwork) in `listings/`
+- **10 Fiverr gig images** generated via Satori + resvg-js in `images/`
+- **Strategy matrix** (`strategy-matrix.md`) — 5 pillars x 4 platforms
+- **Platform checklists** (`checklists/`) — step-by-step posting guides
+- **Listing tracker** (`tracker.md`) — deployment status + live metrics
+- **Gig Monitor** (`scripts/`) — automated daily Fiverr/Upwork scraping + AI morning briefing via Telegram
+- **launchd automation** — 6:45 AM daily report + 7:15 AM watchdog
 
-### What's NOT Built Yet
-- Supabase connection (needs `.env.local` values)
-- Drag-and-drop on Kanban (wired for @dnd-kit, not connected)
-- Recharts visualizations (placeholder containers ready)
-- Form validation (React Hook Form + Zod schemas not yet wired)
-- AI proposal generation (Edge Function not yet created)
-- Auth flow (Supabase Auth not yet integrated)
+### Gig Monitor (LIVE)
+Automated morning briefing system:
+- `scripts/scrape-fiverr.mjs` — Playwright + stealth, scrapes seller dashboard
+- `scripts/scrape-upwork.mjs` — Playwright + stealth, scrapes freelancer dashboard
+- `scripts/generate-report.mjs` — Haiku 4.5 synthesis with template fallback
+- `scripts/send-telegram.mjs` — Direct Telegram Bot API delivery
+- `scripts/update-tracker.mjs` — Auto-updates tracker.md metrics
+- `scripts/morning-report.mjs` — Orchestrator, runs all 5 steps sequentially
+- `scripts/fiverr-login.mjs` / `scripts/upwork-login.mjs` — One-time session setup
+- `scripts/watchdog.sh` — Missing report alert
+- Auth state: `~/.gig-engine/fiverr-auth.json`, `~/.gig-engine/upwork-auth.json`
+- Env: `.env.monitor` (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, ANTHROPIC_API_KEY)
+- launchd: `com.prettyfly.gig-monitor` (6:45 AM), `com.prettyfly.gig-watchdog` (7:15 AM)
+- pmset: Mac wakes at 6:40 AM daily
+- Cost: ~$0.43/month (Haiku 4.5 synthesis only)
+
+### What's NOT Active
+- Next.js SaaS app (`src/`) — scaffolded but not connected to Supabase
+- Supabase migrations — written but never deployed
+- The SaaS app may be revisited later as a dashboard layer
 
 ---
 
