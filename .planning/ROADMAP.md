@@ -31,7 +31,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A logged-in user can log out from any page and is immediately redirected to the unauthenticated state
   4. Two tenants with overlapping data cannot read each other's rows — verified by a cross-tenant isolation test with two real accounts
   5. The existing Gig Monitor, morning report, and Telegram scripts continue to run without modification
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 01-01-PLAN.md — Database migration: tenants table, user_id columns, RLS policies
+- [ ] 01-02-PLAN.md — Auth infrastructure: middleware, login/signup/logout, onboarding wizard
+- [ ] 01-03-PLAN.md — Layout restructuring, public slug route, verification gate, cross-tenant verification
 
 ### Phase 2: Dashboard + Public Catalog
 **Goal**: A freelancer can manage their service listings in a private dashboard and share a polished public catalog page with clients
@@ -93,11 +97,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Execution Order:**
 Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
-Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in parallel with Phases 3–4 if desired.
+Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in parallel with Phases 3-4 if desired.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Multi-Tenant Foundation | 0/TBD | Not started | - |
+| 1. Multi-Tenant Foundation | 0/3 | Planning complete | - |
 | 2. Dashboard + Public Catalog | 0/TBD | Not started | - |
 | 3. Stripe Payments | 0/TBD | Not started | - |
 | 4. Analytics Dashboard | 0/TBD | Not started | - |
