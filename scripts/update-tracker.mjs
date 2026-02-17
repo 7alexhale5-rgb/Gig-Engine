@@ -250,6 +250,7 @@ function updateUpworkRows(lines, upwork) {
 function updateDeploymentStatus(lines) {
   let posted = 0;
   let live = 0;
+  let totalProposals = 0;
 
   // Count statuses from both tables
   for (const line of lines) {
@@ -267,6 +268,9 @@ function updateDeploymentStatus(lines) {
     } else {
       // Upwork row — status is column 7
       status = parts[7]?.trim();
+      // Track cumulative proposals sent (column 8 for Upwork)
+      const proposals = parseInt(parts[8]?.trim(), 10);
+      if (!isNaN(proposals)) totalProposals += proposals;
     }
 
     if (status === 'posted') posted++;
@@ -288,7 +292,7 @@ function updateDeploymentStatus(lines) {
     }
   }
 
-  return { posted, live };
+  return { posted, live, totalProposals };
 }
 
 // ---------------------------------------------------------------------------
@@ -342,7 +346,7 @@ export async function main() {
 
   // Update deployment status counts
   const statusResult = updateDeploymentStatus(lines);
-  console.log(`  Deployment status: ${statusResult.posted} posted, ${statusResult.live} live`);
+  console.log(`  Deployment status: ${statusResult.posted} posted, ${statusResult.live} live, ${statusResult.totalProposals} total proposals`);
 
   // Write back
   writeFileSync(TRACKER_PATH, lines.join('\n'));

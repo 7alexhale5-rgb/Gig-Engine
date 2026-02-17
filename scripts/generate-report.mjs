@@ -221,9 +221,22 @@ export async function main() {
 
       console.log('Haiku synthesis complete.');
     } catch (err) {
-      console.error(`Haiku API call failed: ${err.message}`);
+      const errMsg = err.message || String(err);
+      console.error(`Haiku API call failed: ${errMsg}`);
+
+      // Detect billing / credit issues and surface them clearly
+      const isBilling = errMsg.includes('credit balance') || errMsg.includes('billing') || errMsg.includes('purchase credits');
+      if (isBilling) {
+        console.error('ACTION REQUIRED: Anthropic API credits depleted. Top up at console.anthropic.com');
+      }
+
       console.log('Falling back to template report...');
       report = generateFallbackReport(fiverr, upwork, yesterdayFiverr, yesterdayUpwork);
+
+      // Append billing warning to report so it shows in Telegram
+      if (isBilling) {
+        report += '\n\n--- ALERT ---\nAnthropic API credits depleted. AI insights unavailable until credits are topped up at console.anthropic.com/settings/billing';
+      }
     }
   } else {
     console.log('No ANTHROPIC_API_KEY set. Using template fallback.');

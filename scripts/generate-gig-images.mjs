@@ -155,6 +155,61 @@ const gigs = [
     features: ['Lighthouse 90+ performance', 'Mobile-first responsive', '$0/month hosting on Vercel'],
     tiers: { basic: '$247', standard: '$597', premium: '$1,197' },
   },
+  // P3 listings
+  {
+    id: 'AW-06', pillar: 'Automation & Workflows',
+    headline: 'Data Pipeline & ETL', sub: 'Extract, Transform, Load',
+    features: ['Multi-source data sync', 'Validation & error handling', 'Monitoring & alerting built in'],
+    tiers: { basic: '$197', standard: '$497', premium: '$997' },
+  },
+  {
+    id: 'AI-05', pillar: 'AI & Chatbots',
+    headline: 'Custom GPT / Assistant', sub: 'Trained on Your Business',
+    features: ['Your docs as knowledge base', 'Function calling & live data', 'Guardrails against hallucination'],
+    tiers: { basic: '$147', standard: '$397', premium: '$897' },
+  },
+  {
+    id: 'AI-06', pillar: 'AI & Chatbots',
+    headline: 'Document Processing', sub: 'AI-Powered Data Extraction',
+    features: ['OCR for scanned documents', 'Confidence scoring per field', 'Batch processing pipeline'],
+    tiers: { basic: '$197', standard: '$497', premium: '$1,197' },
+  },
+  {
+    id: 'CRM-05', pillar: 'CRM & GoHighLevel',
+    headline: 'CRM Reporting', sub: 'Pipeline & Sales Dashboards',
+    features: ['Pipeline conversion tracking', 'Team leaderboards & alerts', 'Scheduled report delivery'],
+    tiers: { basic: '$197', standard: '$497', premium: '$897' },
+  },
+  {
+    id: 'CRM-06', pillar: 'CRM & GoHighLevel',
+    headline: 'Marketing Automation', sub: 'Nurture Flows & Lead Scoring',
+    features: ['Conditional branching logic', 'Multi-channel: email + SMS', 'Lifecycle stage automation'],
+    tiers: { basic: '$197', standard: '$497', premium: '$997' },
+  },
+  {
+    id: 'DA-04', pillar: 'Dashboards & Analytics',
+    headline: 'KPI Reporting', sub: 'Executive Dashboards & Alerts',
+    features: ['Goal indicators & trends', 'Scheduled email reports', 'Role-based dashboard views'],
+    tiers: { basic: '$247', standard: '$597', premium: '$1,197' },
+  },
+  {
+    id: 'DA-05', pillar: 'Dashboards & Analytics',
+    headline: 'Spreadsheet to App', sub: 'Migrate to a Real Application',
+    features: ['Database with proper types', 'Forms, filters & search', 'No more broken formulas'],
+    tiers: { basic: '$197', standard: '$497', premium: '$997' },
+  },
+  {
+    id: 'WL-05', pillar: 'Web & Landing Pages',
+    headline: 'Internal Tool', sub: 'Custom Operations App',
+    features: ['Built around your workflow', 'Role-based access control', 'No per-seat fees, you own it'],
+    tiers: { basic: '$397', standard: '$997', premium: '$1,997' },
+  },
+  {
+    id: 'WL-06', pillar: 'Web & Landing Pages',
+    headline: 'E-Commerce Store', sub: 'Shopify or Custom Build',
+    features: ['Sub-2-second load times', 'Mobile-first checkout', 'Payment & shipping configured'],
+    tiers: { basic: '$297', standard: '$697', premium: '$1,497' },
+  },
 ];
 
 // Helper: create a div element (Satori-compatible)
