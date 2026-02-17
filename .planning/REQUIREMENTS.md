@@ -106,43 +106,43 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | — | Pending |
-| AUTH-02 | — | Pending |
-| AUTH-03 | — | Pending |
-| AUTH-04 | — | Pending |
-| AUTH-05 | — | Pending |
-| PROF-01 | — | Pending |
-| PROF-02 | — | Pending |
-| CATL-01 | — | Pending |
-| CATL-02 | — | Pending |
-| CATL-03 | — | Pending |
-| CATL-04 | — | Pending |
-| CATL-05 | — | Pending |
-| CATL-06 | — | Pending |
-| CATL-07 | — | Pending |
-| IMPT-01 | — | Pending |
-| IMPT-02 | — | Pending |
-| IMPT-03 | — | Pending |
-| IMPT-04 | — | Pending |
-| PAY-01 | — | Pending |
-| PAY-02 | — | Pending |
-| PAY-03 | — | Pending |
-| PAY-04 | — | Pending |
-| PAY-05 | — | Pending |
-| ANLY-01 | — | Pending |
-| ANLY-02 | — | Pending |
-| ANLY-03 | — | Pending |
-| ANLY-04 | — | Pending |
-| ANLY-05 | — | Pending |
-| WDGT-01 | — | Pending |
-| WDGT-02 | — | Pending |
-| WDGT-03 | — | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| PROF-01 | Phase 2 | Pending |
+| PROF-02 | Phase 2 | Pending |
+| CATL-01 | Phase 2 | Pending |
+| CATL-02 | Phase 2 | Pending |
+| CATL-03 | Phase 2 | Pending |
+| CATL-04 | Phase 2 | Pending |
+| CATL-05 | Phase 2 | Pending |
+| CATL-06 | Phase 2 | Pending |
+| CATL-07 | Phase 2 | Pending |
+| IMPT-01 | Phase 5 | Pending |
+| IMPT-02 | Phase 5 | Pending |
+| IMPT-03 | Phase 5 | Pending |
+| IMPT-04 | Phase 5 | Pending |
+| PAY-01 | Phase 3 | Pending |
+| PAY-02 | Phase 3 | Pending |
+| PAY-03 | Phase 3 | Pending |
+| PAY-04 | Phase 3 | Pending |
+| PAY-05 | Phase 3 | Pending |
+| ANLY-01 | Phase 4 | Pending |
+| ANLY-02 | Phase 4 | Pending |
+| ANLY-03 | Phase 4 | Pending |
+| ANLY-04 | Phase 4 | Pending |
+| ANLY-05 | Phase 4 | Pending |
+| WDGT-01 | Phase 6 | Pending |
+| WDGT-02 | Phase 6 | Pending |
+| WDGT-03 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 31 total
-- Mapped to phases: 0
-- Unmapped: 31
+- Mapped to phases: 31
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-17*
-*Last updated: 2026-02-17 after initial definition*
+*Last updated: 2026-02-17 after roadmap creation — all 31 requirements mapped*
