@@ -45,6 +45,7 @@
 | AI-04 | AI & Chatbots | AI-Powered Customer Support Bot | $197 / $497 / $997 | $600-2K fixed | - | $100/hr | P2 | draft | customer support bot, helpdesk ai, ticket routing, auto-reply |
 | AI-05 | AI & Chatbots | Custom GPT / AI Assistant Build | $147 / $397 / $897 | $400-1.5K fixed | - | $100/hr | P3 | draft | custom gpt, ai assistant, openai, prompt engineering, fine-tuning |
 | AI-06 | AI & Chatbots | AI Document Processing & Extraction | $197 / $497 / $1,197 | $800-2.5K fixed | $150/hr | $125/hr | P3 | draft | document processing, ocr, data extraction, ai parsing, pdf |
+| AI-07 | AI & Chatbots | AI Cost Savings Assessment | $297 / $997 / $2,497 | $497-4K fixed | $125/hr | - | P1 | ready | ai cost savings, saas audit, vendor negotiation, cost optimization, ai strategy, per seat licensing |
 
 ### Pillar 3: CRM & GoHighLevel
 

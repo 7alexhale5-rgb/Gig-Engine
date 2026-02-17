@@ -83,6 +83,12 @@ const gigs = [
     features: ['Secure login & auth', 'Custom dashboard & data', 'Built to scale with you'],
     tiers: { basic: '$397', standard: '$1,297', premium: '$2,497' },
   },
+  {
+    id: 'AI-07', pillar: 'AI & Chatbots',
+    headline: 'AI Cost Savings', sub: 'Vendor Audit & Renegotiation',
+    features: ['Find where AI changed the economics', 'Dollar-figure savings report', 'Vendor negotiation playbook'],
+    tiers: { basic: '$297', standard: '$997', premium: '$2,497' },
+  },
 ];
 
 // Helper: create a div element (Satori-compatible)
