@@ -9,15 +9,16 @@
 
 | Metric | Count |
 |--------|-------|
-| **Total P1 Listings** | 20 |
-| **Fiverr Listings** | 10 |
-| **Upwork Listings** | 10 |
-| **Generated** | 20 |
-| **Images Ready** | 10 (Fiverr) |
+| **Total Listings** | 44 (22 Fiverr + 22 Upwork) |
+| **P1 Listings** | 24 (12 Fiverr + 12 Upwork) |
+| **P2 Listings** | 20 (10 Fiverr + 10 Upwork) |
+| **P3 Listings** | 0 (9 services planned, not yet written) |
+| **Images Ready** | 22 (Fiverr) |
 | **Posted** | 0 |
 | **Live** | 0 |
 
-**Premium Platform Applications:** 2 pending (Toptal, Arc.dev)
+**Premium Platform Applications:** 2 not started (Toptal, Arc.dev)
+**Action Plan:** `docs/ACTION-PLAN.md` — full manual deployment checklist
 
 ---
 
@@ -35,6 +36,19 @@
 | DA-01 | Custom Dashboard | Dashboards | $197 / $697 / $1,297 | da-01-custom-dashboard.png | generated | -- | -- | -- | -- | -- | -- |
 | WL-01 | Landing Page | Web | $97 / $347 / $697 | wl-01-landing-page.png | generated | -- | -- | -- | -- | -- | -- |
 | WL-02 | Client Portal | Web | $397 / $1,297 / $2,497 | wl-02-client-portal.png | generated | -- | -- | -- | -- | -- | -- |
+| AI-07 | AI Cost Savings | AI | $297 / $997 / $2,497 | ai-07-ai-cost-savings.png | generated | -- | -- | -- | -- | -- | -- |
+| AI-08 | Agentic Transition | AI | $397 / $1,297 / $3,497 | ai-08-agentic-transition.png | generated | -- | -- | -- | -- | -- | -- |
+| **P2 Listings** | | | | | | | | | | | |
+| AW-04 | Zapier Automation | Automation | $97 / $247 / $597 | aw-04-zapier-automation.png | generated | -- | -- | -- | -- | -- | -- |
+| AW-05 | Email & SMS Sequences | Automation | $147 / $347 / $697 | aw-05-email-sms-sequences.png | generated | -- | -- | -- | -- | -- | -- |
+| AI-03 | RAG Pipeline | AI | $297 / $697 / $1,497 | ai-03-rag-pipeline.png | generated | -- | -- | -- | -- | -- | -- |
+| AI-04 | AI Support Bot | AI | $197 / $497 / $997 | ai-04-ai-support-bot.png | generated | -- | -- | -- | -- | -- | -- |
+| CRM-03 | GHL Funnels | CRM | $147 / $347 / $697 | crm-03-ghl-funnels.png | generated | -- | -- | -- | -- | -- | -- |
+| CRM-04 | CRM Optimization | CRM | $247 / $597 / $1,197 | crm-04-crm-optimization.png | generated | -- | -- | -- | -- | -- | -- |
+| DA-02 | Admin Panel | Dashboards | $397 / $897 / $1,797 | da-02-admin-panel.png | generated | -- | -- | -- | -- | -- | -- |
+| DA-03 | Analytics Setup | Dashboards | $197 / $497 / $997 | da-03-analytics-setup.png | generated | -- | -- | -- | -- | -- | -- |
+| WL-03 | SaaS MVP | Web | $497 / $1,497 / $2,997 | wl-03-saas-mvp.png | generated | -- | -- | -- | -- | -- | -- |
+| WL-04 | Business Website | Web | $247 / $597 / $1,197 | wl-04-business-website.png | generated | -- | -- | -- | -- | -- | -- |
 
 > **Note**: Launch pricing is temporarily reduced on Basic tiers for review velocity. Raise to strategy-matrix.md prices after 10+ reviews per gig.
 
@@ -64,6 +78,19 @@
 | DA-01 | Custom Dashboard | Dashboards | $800-$3,000 | $110-125/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
 | WL-01 | Landing Page | Web | $400-$1,500 | $110-120/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
 | WL-02 | Client Portal | Web | $2,000-$6,000 | $115-125/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| AI-07 | AI Cost Savings | AI | $497-$4,000 | $125/hr | AI & Data | generated | 0 | 0 | 0 | $0 |
+| AI-08 | Agentic Transition | AI | $497-$12,000 | $150/hr | AI & Data | generated | 0 | 0 | 0 | $0 |
+| **P2** | | | | | | | | | | |
+| AW-04 | Zapier Automation | Automation | $200-$1,000 | $95/hr | Automation | generated | 0 | 0 | 0 | $0 |
+| AW-05 | Email & SMS Sequences | Automation | $300-$1,200 | $95/hr | Automation | generated | 0 | 0 | 0 | $0 |
+| AI-03 | RAG Pipeline | AI | $1,000-$3,500 | $175/hr | AI & Data | generated | 0 | 0 | 0 | $0 |
+| AI-04 | AI Support Bot | AI | $600-$2,000 | $100/hr | AI & Data | generated | 0 | 0 | 0 | $0 |
+| CRM-03 | GHL Funnels | CRM | $300-$1,200 | $100-115/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| CRM-04 | CRM Optimization | CRM | $600-$2,000 | $125-150/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| DA-02 | Admin Panel | Dashboards | $1,000-$4,000 | $125-150/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| DA-03 | Analytics Setup | Dashboards | $600-$2,000 | $100-125/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| WL-03 | SaaS MVP | Web | $2,500-$8,000 | $150/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
+| WL-04 | Business Website | Web | $600-$2,000 | $95/hr | Web Dev & CRM | generated | 0 | 0 | 0 | $0 |
 
 ### Upwork Status Key
 
@@ -216,7 +243,7 @@ From strategy-matrix.md -- $25,000/month by Day 90 through a blended portfolio.
 
 | Metric | Target |
 |--------|--------|
-| Live Fiverr gigs | 10 (all P1) |
+| Live Fiverr gigs | 22 (12 P1 + 10 P2) |
 | Upwork specialized profiles | 3 |
 | Proposals sent (cumulative) | 300+ |
 | Upwork win rate | 5-10% |
@@ -234,3 +261,4 @@ From strategy-matrix.md -- $25,000/month by Day 90 through a blended portfolio.
 |------|--------|----|
 | 2026-02-10 | Initial tracker created with all P1 listings, morning workflow, 90-day targets | Claude + Alex |
 | 2026-02-10 | Synced to matrix IDs (AW-01, AI-01, etc.), updated launch pricing, added images, corrected counts to 10 Fiverr + 10 Upwork, aligned revenue projections with strategy review | Claude |
+| 2026-02-17 | Expanded to 44 listings (22 Fiverr + 22 Upwork), 22 gig images, added P2 rows, AI-07/AI-08 P1 additions, created ACTION-PLAN.md | Claude + Alex |
