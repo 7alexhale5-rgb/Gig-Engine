@@ -5,27 +5,14 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
-  Kanban,
-  Send,
   Store,
-  FolderKanban,
-  Briefcase,
-  BarChart3,
-  Settings,
   ChevronLeft,
   Zap,
 } from "lucide-react"
 import { useState } from "react"
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Pipeline", href: "/pipeline", icon: Kanban },
-  { name: "Proposals", href: "/proposals", icon: Send },
-  { name: "Gigs", href: "/gigs", icon: Store },
-  { name: "Projects", href: "/projects", icon: FolderKanban },
-  { name: "Portfolio", href: "/portfolio", icon: Briefcase },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "Service Catalog", href: "/", icon: Store },
 ]
 
 export function Sidebar() {
@@ -47,7 +34,7 @@ export function Sidebar() {
         {!collapsed && (
           <div className="flex flex-col">
             <span className="text-sm font-bold text-foreground">PrettyFly</span>
-            <span className="text-[10px] text-muted-foreground">Acquisition Engine</span>
+            <span className="text-[10px] text-muted-foreground">Service Catalog</span>
           </div>
         )}
       </div>

@@ -3,8 +3,8 @@ import "./globals.css"
 import { Sidebar } from "@/components/layout"
 
 export const metadata: Metadata = {
-  title: "PrettyFly Acquisition Engine",
-  description: "Centralized freelance operations platform for gig economy acquisition",
+  title: "PrettyFly Service Catalog",
+  description: "31 freelance services across 5 pillars — Fiverr & Upwork",
 }
 
 export default function RootLayout({

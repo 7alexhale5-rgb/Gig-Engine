@@ -4,7 +4,8 @@
   "private": true,
   "description": "PrettyFly.ai Gig Economy Acquisition Engine — centralized freelance operations platform",
   "scripts": {
-    "dev": "next dev",
+    "prebuild": "cp -r images/ public/images/ 2>/dev/null || true",
+    "dev": "cp -r images/ public/images/ 2>/dev/null || true && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
