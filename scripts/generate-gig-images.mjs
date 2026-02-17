@@ -89,6 +89,72 @@ const gigs = [
     features: ['Find where AI changed the economics', 'Dollar-figure savings report', 'Vendor negotiation playbook'],
     tiers: { basic: '$297', standard: '$997', premium: '$2,497' },
   },
+  {
+    id: 'AI-03', pillar: 'AI & Chatbots',
+    headline: 'RAG Pipeline', sub: 'Knowledge Base + Vector DB',
+    features: ['Trained on your docs & data', 'Accurate, cited answers', 'API-ready for any frontend'],
+    tiers: { basic: '$297', standard: '$697', premium: '$1,497' },
+  },
+  {
+    id: 'AI-04', pillar: 'AI & Chatbots',
+    headline: 'AI Support Bot', sub: 'Helpdesk Automation',
+    features: ['Resolves tickets automatically', 'Smart routing & escalation', 'Sentiment detection built in'],
+    tiers: { basic: '$197', standard: '$497', premium: '$997' },
+  },
+  {
+    id: 'AI-08', pillar: 'AI & Chatbots',
+    headline: 'Agentic Transition', sub: 'Replace SaaS with AI Agents',
+    features: ['Audit your per-seat tool spend', 'Architecture for custom agents', 'Build-or-buy decision framework'],
+    tiers: { basic: '$397', standard: '$1,297', premium: '$3,497' },
+  },
+  {
+    id: 'AW-04', pillar: 'Automation & Workflows',
+    headline: 'Zapier Automation', sub: 'Advanced Multi-Step Zaps',
+    features: ['Conditional logic & branching', 'Multi-app data sync', 'Error handling & monitoring'],
+    tiers: { basic: '$97', standard: '$247', premium: '$597' },
+  },
+  {
+    id: 'AW-05', pillar: 'Automation & Workflows',
+    headline: 'Email & SMS Sequences', sub: 'Drip Campaigns That Convert',
+    features: ['Behavior-triggered sends', 'A/B testing built in', 'CRM & analytics integration'],
+    tiers: { basic: '$147', standard: '$347', premium: '$697' },
+  },
+  {
+    id: 'CRM-03', pillar: 'CRM & GoHighLevel',
+    headline: 'GHL Funnels', sub: 'Landing Pages & Lead Capture',
+    features: ['Conversion-optimized pages', 'Automated follow-up sequences', 'Pipeline integration built in'],
+    tiers: { basic: '$147', standard: '$347', premium: '$697' },
+  },
+  {
+    id: 'CRM-04', pillar: 'CRM & GoHighLevel',
+    headline: 'CRM Optimization', sub: 'HubSpot & Salesforce',
+    features: ['Full audit with prioritized fixes', 'Workflow automation rebuilds', 'Custom reporting dashboards'],
+    tiers: { basic: '$247', standard: '$597', premium: '$1,197' },
+  },
+  {
+    id: 'DA-02', pillar: 'Dashboards & Analytics',
+    headline: 'Admin Panel', sub: 'Custom Back-Office Tools',
+    features: ['CRUD modules for your data', 'Role-based access control', 'No per-seat fees, you own it'],
+    tiers: { basic: '$397', standard: '$897', premium: '$1,797' },
+  },
+  {
+    id: 'DA-03', pillar: 'Dashboards & Analytics',
+    headline: 'Analytics Setup', sub: 'GA4 / Mixpanel / Custom',
+    features: ['Custom event tracking', 'Funnel & conversion analysis', 'Server-side tracking option'],
+    tiers: { basic: '$197', standard: '$497', premium: '$997' },
+  },
+  {
+    id: 'WL-03', pillar: 'Web & Landing Pages',
+    headline: 'SaaS MVP', sub: 'Next.js + Supabase',
+    features: ['Auth, database, billing ready', 'Weekly sprints with staging link', 'Production-quality from day one'],
+    tiers: { basic: '$497', standard: '$1,497', premium: '$2,997' },
+  },
+  {
+    id: 'WL-04', pillar: 'Web & Landing Pages',
+    headline: 'Business Website', sub: 'Fast, SEO-Optimized, Free Hosting',
+    features: ['Lighthouse 90+ performance', 'Mobile-first responsive', '$0/month hosting on Vercel'],
+    tiers: { basic: '$247', standard: '$597', premium: '$1,197' },
+  },
 ];
 
 // Helper: create a div element (Satori-compatible)

@@ -5,8 +5,9 @@
 Document-driven freelance deployment system. Pivoted from SaaS app to automation scripts + markdown listings.
 
 ## Current State
-- 20 listings ready (10 Fiverr, 10 Upwork) in `listings/`
-- 10 Fiverr gig images in `images/`
+- 44 listings ready (22 Fiverr, 22 Upwork) across 5 pillars in `listings/`
+- 22 Fiverr gig images (1280x769 PNG) in `images/fiverr/`
+- 31 services in strategy matrix (22 P1 + P2 deployed, 9 P3 planned)
 - Strategy matrix + platform-specific checklists
 - Gig Monitor LIVE (daily Playwright scraping + Haiku AI morning briefing via Telegram)
 
@@ -20,8 +21,8 @@ Document-driven freelance deployment system. Pivoted from SaaS app to automation
 
 | Path | Purpose |
 |------|---------|
-| `listings/` | 20 markdown listing files (Fiverr + Upwork) |
-| `images/` | 10 Fiverr gig images |
+| `listings/` | 44 markdown listing files (22 Fiverr + 22 Upwork) |
+| `images/fiverr/` | 22 Fiverr gig images (Satori-generated) |
 | `scripts/morning-report.mjs` | Daily report orchestrator |
 | `scripts/scrape-fiverr.mjs` | Fiverr dashboard scraper |
 | `scripts/scrape-upwork.mjs` | Upwork dashboard scraper |
@@ -45,7 +46,7 @@ Document-driven freelance deployment system. Pivoted from SaaS app to automation
 node scripts/morning-report.mjs        # Run daily report manually
 node scripts/fiverr-login.mjs          # Re-auth Fiverr (interactive)
 node scripts/upwork-login.mjs          # Re-auth Upwork (interactive)
-node scripts/generate-images.mjs       # Regenerate gig images
+node scripts/generate-gig-images.mjs    # Regenerate all 22 gig images
 ```
 
 ## Common Pitfalls

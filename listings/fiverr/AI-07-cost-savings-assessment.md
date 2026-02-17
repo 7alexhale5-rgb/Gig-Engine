@@ -21,8 +21,8 @@ I will audit your SaaS and vendor spend to find AI cost savings you are missing
 | Slot | File | Description |
 |------|------|-------------|
 | Image 1 (Thumbnail) | `images/fiverr/ai-07-cost-savings.png` | Service overview with tier pricing, KPMG reference |
-| Image 2 | _Create: sample savings report screenshot_ | |
-| Image 3 | _Create: before/after cost comparison_ | |
+| Image 2 | `images/fiverr/ai-07-savings-report.png` | Sample savings report with vendor line items, actions, and $67K annual impact |
+| Image 3 | `images/fiverr/ai-07-before-after.png` | Before/after cost comparison — 47% reduction, $83K annual savings |
 
 ## Pricing Table
 

@@ -46,6 +46,7 @@
 | AI-05 | AI & Chatbots | Custom GPT / AI Assistant Build | $147 / $397 / $897 | $400-1.5K fixed | - | $100/hr | P3 | draft | custom gpt, ai assistant, openai, prompt engineering, fine-tuning |
 | AI-06 | AI & Chatbots | AI Document Processing & Extraction | $197 / $497 / $1,197 | $800-2.5K fixed | $150/hr | $125/hr | P3 | draft | document processing, ocr, data extraction, ai parsing, pdf |
 | AI-07 | AI & Chatbots | AI Cost Savings Assessment | $297 / $997 / $2,497 | $497-4K fixed | $125/hr | - | P1 | ready | ai cost savings, saas audit, vendor negotiation, cost optimization, ai strategy, per seat licensing |
+| AI-08 | AI & Chatbots | Agentic Transition Architecture | $397 / $1,297 / $3,497 | $497-12K fixed | $175/hr | $150/hr | P1 | ready | agentic ai, ai agent architecture, saas replacement, per seat alternative, ai transformation |
 
 ### Pillar 3: CRM & GoHighLevel
 
@@ -85,10 +86,10 @@
 
 | Platform | P1 Listings | P2 Listings | P3 Listings | Total | Revenue Target |
 |----------|-------------|-------------|-------------|-------|----------------|
-| **Fiverr** | 10 | 10 | 9 | 29 | $5,000-12,000/mo |
-| **Upwork** | 10 | 10 | 9 | 29 | $6,000-20,000/mo |
-| **Toptal** | 6 | 6 | 4 | 16 | $2,000-8,000/mo |
-| **Arc.dev** | 5 | 6 | 5 | 16 | $2,000-8,000/mo |
+| **Fiverr** | 11 | 10 | 9 | 30 | $5,000-12,000/mo |
+| **Upwork** | 11 | 10 | 9 | 30 | $6,000-20,000/mo |
+| **Toptal** | 7 | 6 | 4 | 17 | $2,000-8,000/mo |
+| **Arc.dev** | 6 | 6 | 5 | 17 | $2,000-8,000/mo |
 
 **Fiverr Strategy:** All 29 services get productized Fiverr listings with 3-tier pricing. Productized deliverables, clear scope per tier, designed for conversion. Lower tiers build review velocity, premium tiers capture high-value buyers.
 
@@ -105,13 +106,13 @@
 | Pillar | Color | P1 | P2 | P3 | Total | Target | Status |
 |--------|-------|----|----|-----|-------|--------|--------|
 | Automation & Workflows | `#3B82F6` blue | 3 | 2 | 1 | 6 | 5-6 | Balanced |
-| AI & Chatbots | `#8B5CF6` purple | 2 | 2 | 2 | 6 | 5-6 | Balanced |
+| AI & Chatbots | `#8B5CF6` purple | 4 | 2 | 2 | 8 | 5-6 | +2 over (market timing) |
 | CRM & GoHighLevel | `#10B981` green | 2 | 2 | 2 | 6 | 5-6 | Balanced |
 | Dashboards & Analytics | `#F59E0B` amber | 1 | 2 | 2 | 5 | 5-6 | Balanced |
 | Web & Landing Pages | `#EF4444` red | 2 | 2 | 2 | 6 | 5-6 | Balanced |
-| **Totals** | | **10** | **10** | **9** | **29** | 25-30 | |
+| **Totals** | | **12** | **10** | **9** | **31** | 25-30 | |
 
-All five pillars fall within the 5-6 listing range. No pillar is over-indexed or under-served.
+AI & Chatbots is 2 over the target range at 8 listings. This is intentional — the SaaS-to-agent transition market is time-sensitive (Feb 2026 SaaS Apocalypse wave) and AI-07/AI-08 directly complement each other (cost assessment feeds into architecture engagement). Will re-evaluate at quarterly review if the pillar needs rebalancing.
 
 ---
 
@@ -121,7 +122,7 @@ All five pillars fall within the 5-6 listing range. No pillar is over-indexed or
 
 | Week | Action | Listings |
 |------|--------|----------|
-| Day 1-3 | Fiverr profile setup, first 5 gigs live | AW-01, AW-02, AI-01, CRM-01, DA-01 |
+| Day 1-3 | Fiverr profile setup, first 6 gigs live | AW-01, AW-02, AI-01, AI-08, CRM-01, DA-01 |
 | Day 4-7 | Remaining 5 Fiverr gigs + Upwork profile | AW-03, AI-02, CRM-02, WL-01, WL-02 |
 | Day 8-10 | Upwork Specialized Profiles (3 categories) | All P1 available for proposals |
 | Day 11-14 | Toptal + Arc.dev applications submitted | 6 Toptal-eligible, 5 Arc-eligible |
