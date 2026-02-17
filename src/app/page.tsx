@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { getListingsByPillar, getStats } from "@/lib/listings"
 import { Header, PageContainer } from "@/components/layout"
 
@@ -69,12 +68,12 @@ export default function ServiceCatalog() {
                     {/* Gig Image */}
                     {listing.imagePath && (
                       <div className="relative aspect-[1280/769] w-full">
-                        <Image
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
                           src={listing.imagePath}
                           alt={listing.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          className="absolute inset-0 h-full w-full object-cover"
+                          loading="lazy"
                         />
                       </div>
                     )}

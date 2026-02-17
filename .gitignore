@@ -43,6 +43,3 @@ data/upwork/
 data/reports/
 logs/
 playwright/.auth/
-
-# public images (copied from images/ at build time)
-public/images/
