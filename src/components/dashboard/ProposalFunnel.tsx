@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts"
+import type { Props as LabelProps } from "recharts/types/component/Label"
 import { formatPercentage } from "@/lib/utils/formatters"
 import { cn } from "@/lib/utils"
 
@@ -69,8 +70,7 @@ function FunnelTooltip({ active, payload }: FunnelTooltipProps) {
 // Custom bar label
 // ---------------------------------------------------------------------------
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function renderBarLabel(props: any) {
+function renderBarLabel(props: LabelProps) {
   const x = typeof props.x === "number" ? props.x : 0
   const y = typeof props.y === "number" ? props.y : 0
   const width = typeof props.width === "number" ? props.width : 0

@@ -7,9 +7,18 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 export async function createClient() {
   const cookieStore = await cookies()
 
-  const url = SUPABASE_URL || "https://placeholder.supabase.co"
-  const key = SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MTgwMDAwMDAwMH0.cGxhY2Vob2xkZXItc2lnbmF0dXJlLWZvci1idWlsZA"
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.warn(
+      "Supabase credentials missing. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local."
+    )
+  }
 
+  const url = SUPABASE_URL || "https://placeholder.supabase.co"
+  const key =
+    SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.placeholder"
+
+  // NOTE: Database generic omitted — see client.ts comment for rationale.
   return createServerClient(url, key, {
     cookies: {
       getAll() {

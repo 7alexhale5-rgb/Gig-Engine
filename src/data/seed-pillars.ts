@@ -14,30 +14,30 @@ export const SEED_PILLARS: SeedPillar[] = [
     sort_order: 1,
   },
   {
-    name: "AI & Chatbots",
+    name: "AI Implementation",
     description:
       "Custom AI assistants, chatbot implementations, RAG pipelines, and intelligent automation using OpenAI, Anthropic, and open-source LLMs.",
     color: "#8B5CF6",
     sort_order: 2,
   },
   {
-    name: "CRM & GoHighLevel",
+    name: "System Architecture",
     description:
-      "GoHighLevel setup, CRM migrations, marketing-automation funnels, and client-management system builds for agencies and small businesses.",
+      "CRM setup, GoHighLevel migrations, technical audits, system design, and infrastructure planning for agencies and small businesses.",
     color: "#10B981",
     sort_order: 3,
   },
   {
-    name: "Dashboards & Analytics",
+    name: "Web App Development",
     description:
-      "Custom reporting dashboards, data visualization, KPI tracking systems, and analytics integrations using modern web frameworks.",
+      "Custom reporting dashboards, landing pages, client portals, and web application MVPs built with Next.js and modern tooling.",
     color: "#F59E0B",
     sort_order: 4,
   },
   {
-    name: "Web & Landing Pages",
+    name: "Strategy & Consulting",
     description:
-      "High-converting landing pages, business websites, client portals, and web application MVPs built with Next.js and modern tooling.",
+      "Process mapping, fractional CTO advisory, digital strategy, architecture reviews, and technical consulting services.",
     color: "#EF4444",
     sort_order: 5,
   },

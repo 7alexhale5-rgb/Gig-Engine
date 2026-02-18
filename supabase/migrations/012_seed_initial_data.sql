@@ -11,8 +11,8 @@ INSERT INTO platforms (name, profile_status) VALUES
 
 -- Seed service pillars
 INSERT INTO service_pillars (name, description, color, sort_order) VALUES
-  ('Web Development', 'Full-stack web development services including React, Next.js, Node.js, and modern web technologies.', '#3B82F6', 1),
-  ('AI & Automation', 'AI-powered solutions, workflow automation, chatbots, and intelligent integrations.', '#8B5CF6', 2),
-  ('Data & Analytics', 'Data pipelines, dashboards, visualization, and business intelligence solutions.', '#10B981', 3),
-  ('Design & UX', 'User experience design, UI design, prototyping, and design system creation.', '#F59E0B', 4),
-  ('Strategy & Consulting', 'Technical consulting, architecture reviews, digital strategy, and advisory services.', '#EF4444', 5);
+  ('Automation & Workflows', 'n8n, Make, and Zapier workflow builds. Business-process automation, data pipelines, and system integrations that eliminate manual tasks.', '#3B82F6', 1),
+  ('AI Implementation', 'Custom AI assistants, chatbot implementations, RAG pipelines, and intelligent automation using OpenAI, Anthropic, and open-source LLMs.', '#8B5CF6', 2),
+  ('System Architecture', 'CRM setup, GoHighLevel migrations, technical audits, system design, and infrastructure planning for agencies and small businesses.', '#10B981', 3),
+  ('Web App Development', 'Custom reporting dashboards, landing pages, client portals, and web application MVPs built with Next.js and modern tooling.', '#F59E0B', 4),
+  ('Strategy & Consulting', 'Process mapping, fractional CTO advisory, digital strategy, architecture reviews, and technical consulting services.', '#EF4444', 5);

@@ -4,6 +4,8 @@ import { useState, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { GigListing, GigStatus } from "@/lib/supabase/types"
 
+const supabase = createClient()
+
 interface GigFilters {
   status?: GigStatus
   platform_id?: string
@@ -13,7 +15,6 @@ interface GigFilters {
 export function useGigs() {
   const [gigs, setGigs] = useState<GigListing[]>([])
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const fetchGigs = useCallback(
     async (filters?: GigFilters) => {
@@ -45,7 +46,7 @@ export function useGigs() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const createGig = useCallback(
@@ -72,7 +73,7 @@ export function useGigs() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const updateGig = useCallback(
@@ -99,7 +100,7 @@ export function useGigs() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const deleteGig = useCallback(
@@ -121,7 +122,7 @@ export function useGigs() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   return {

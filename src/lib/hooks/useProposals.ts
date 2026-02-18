@@ -4,6 +4,8 @@ import { useState, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { ProposalTemplate } from "@/lib/supabase/types"
 
+const supabase = createClient()
+
 interface ProposalFilters {
   pillar_id?: string
   platform_id?: string
@@ -13,7 +15,6 @@ interface ProposalFilters {
 export function useProposals() {
   const [templates, setTemplates] = useState<ProposalTemplate[]>([])
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const fetchTemplates = useCallback(
     async (filters?: ProposalFilters) => {
@@ -45,7 +46,7 @@ export function useProposals() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const createTemplate = useCallback(
@@ -69,7 +70,7 @@ export function useProposals() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const updateTemplate = useCallback(
@@ -96,7 +97,7 @@ export function useProposals() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   const incrementUsed = useCallback(
@@ -125,7 +126,7 @@ export function useProposals() {
         throw err
       }
     },
-    [supabase, templates]
+    [templates]
   )
 
   const incrementWon = useCallback(
@@ -154,7 +155,7 @@ export function useProposals() {
         throw err
       }
     },
-    [supabase, templates]
+    [templates]
   )
 
   return {

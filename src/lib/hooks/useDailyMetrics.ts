@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/client"
 import type { DailyMetrics } from "@/lib/supabase/types"
 import { format } from "date-fns"
 
+const supabase = createClient()
+
 interface DateRange {
   from: string // ISO date string (YYYY-MM-DD)
   to: string // ISO date string (YYYY-MM-DD)
@@ -13,7 +15,6 @@ interface DateRange {
 export function useDailyMetrics() {
   const [metrics, setMetrics] = useState<DailyMetrics[]>([])
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const fetchMetrics = useCallback(
     async (dateRange?: DateRange) => {
@@ -42,7 +43,7 @@ export function useDailyMetrics() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   /**
@@ -60,7 +61,6 @@ export function useDailyMetrics() {
           .upsert(
             {
               ...data,
-              updated_at: new Date().toISOString(),
             },
             {
               onConflict: "date,platform_id",
@@ -94,7 +94,7 @@ export function useDailyMetrics() {
         setLoading(false)
       }
     },
-    [supabase]
+    []
   )
 
   /**
