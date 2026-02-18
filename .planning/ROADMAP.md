@@ -50,7 +50,7 @@ Plans:
 **Plans**: 5 plans
 Plans:
 - [x] 02-01-PLAN.md — Migration 018 (bio, thumbnail_url, platform_id nullable, anon RLS) + dashboard sidebar + route scaffolding
-- [ ] 02-02-PLAN.md — Service CRUD (create/edit/delete Server Actions, form with pricing tiers + thumbnails, card grid list)
+- [x] 02-02-PLAN.md — Service CRUD (create/edit/delete Server Actions, form with pricing tiers + thumbnails, card grid list)
 - [ ] 02-03-PLAN.md — Profile management (display name, avatar, tagline, bio) + settings (slug editing)
 - [ ] 02-04-PLAN.md — Public catalog page (CatalogHeader, service cards grouped by pillar, markdown rendering, mobile-responsive)
 - [ ] 02-05-PLAN.md — Human verification checkpoint for all 5 Phase 2 success criteria
