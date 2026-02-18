@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-02-17)
 ## Current Position
 
 Phase: 2 of 6 (Dashboard + Public Catalog)
-Plan: 3 of 5 in current phase
-Status: Phase 2 in progress — Plans 01 and 02 complete
-Last activity: 2026-02-18 — Plan 02-02 complete (Service CRUD: server actions, ServiceForm, ServiceList, 3 route pages)
+Plan: 4 of 5 in current phase
+Status: Phase 2 in progress — Plans 01, 02, 03 complete
+Last activity: 2026-02-18 — Plan 02-03 complete (profile editing form with avatar preview, settings page with slug editor and availability check)
 
-Progress: [####░░░░░░] ~28%
+Progress: [####░░░░░░] ~32%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4 (01-01, 01-02, 01-03, 02-01, 02-02)
-- Average duration: ~29 min
-- Total execution time: ~137min (Phase 1) + ~2min (02-01) + ~4min (02-02) = ~143min
+- Total plans completed: 5 (01-01, 01-02, 01-03, 02-01, 02-02, 02-03)
+- Average duration: ~26 min
+- Total execution time: ~137min (Phase 1) + ~11min (Phase 2 so far)
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-multi-tenant-foundation | 3 complete | ~137 min | ~46 min |
-| 02-dashboard-public-catalog | 2 complete | ~6 min | ~3 min |
+| 02-dashboard-public-catalog | 3 complete (02-01, 02-02, 02-03) | ~11 min | ~3.7 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (partial), 02-01 (2min), 02-02 (4min)
-- Trend: Very fast — plan pre-work from research phase paying off
+- Last 5 plans: 02-01 (2min), 02-02 (4min), 02-03 (5min)
+- Trend: Very fast — well-scoped plans, clear patterns, pre-existing auth/supabase scaffolding
 
 *Updated after each plan completion*
 
@@ -61,10 +61,14 @@ Recent decisions affecting current work:
 - [02-01]: Dashboard root /dashboard redirects to /dashboard/services; no standalone root page
 - [02-02]: ServiceForm uses react-hook-form state + manual FormData construction — PricingTierEditor is controlled-only, native form action= would require hidden inputs for all pricing fields
 - [02-02]: Separate ServiceForm from GigForm — dashboard catalog CRUD needs simpler public-facing fields (no platform_id, status, gig_url admin fields); avoids coupling
+- [02-03]: updateSettings slug availability check uses anon client (sees onboarding_complete=true tenants) + auth client to exclude own slug — handles same-slug update edge case
+- [02-03]: ProfileForm and SettingsForm collocated in route directory — avoids premature abstraction; Server Action error path uses redirect with encoded query param
+- [02-03]: Slug change warning only shown when slug !== currentSlug — reduces visual noise
+- [02-03]: zodResolver requires z.input<> type annotation (not z.infer/z.output) when schema uses .default() — avoids resolver type mismatch with hook-form
 
 ### Pending Todos
 
-None — Plans 02-01 and 02-02 complete. Ready for Plan 02-03 (Profile management).
+None — Plans 02-01, 02-02, 02-03 complete. Ready for Plan 02-04 (Public Catalog page).
 
 ### Blockers/Concerns
 
@@ -72,10 +76,10 @@ None — Plans 02-01 and 02-02 complete. Ready for Plan 02-03 (Profile managemen
 - [Phase 3]: Stripe webhook handler must use req.text() before constructEvent — not req.json() (destroys HMAC signature)
 - [Phase 5]: Scraper auth state expires every 7-30 days silently — import worker must detect login-wall DOM signatures and surface re-auth prompt
 - [Phase 5]: Run /gsd:research-phase before planning this phase (Upwork API viability, Supabase Vault pattern)
-- [02-02]: ESLint useEslintrc/extensions warnings are pre-existing — deferred to eslint config fix in maintenance task
+- [02-03]: ESLint useEslintrc/extensions warnings are pre-existing — deferred to eslint config fix in maintenance task
 
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Plan 02-02 complete. Service CRUD implemented: createService/updateService/deleteService actions, ServiceForm with thumbnail + pricing + contact_for_pricing, ServiceList with onboarding checklist, three route pages. Build passes.
-Resume file: .planning/phases/02-dashboard-public-catalog/02-03-PLAN.md
+Stopped at: Plan 02-03 complete. Profile editing form (display_name, tagline, bio, avatar_url with live preview) and settings page (email read-only, slug editor with anon-client availability check and amber warning) implemented with zod-validated Server Actions. Build passes. Ready for Plan 02-04 (Public Catalog).
+Resume file: .planning/phases/02-dashboard-public-catalog/02-04-PLAN.md
