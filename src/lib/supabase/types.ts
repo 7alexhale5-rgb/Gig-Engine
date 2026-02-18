@@ -78,11 +78,14 @@ export interface ServicePillar {
   updated_at: string
 }
 
-/** Migration 003 */
+/** Migration 003 + 017 (user_id) + 018 (thumbnail_url, contact_for_pricing, platform_id nullable) */
 export interface GigListing {
   id: string
-  platform_id: string
+  /** Nullable since migration 018 — Phase 2 services are platform-agnostic */
+  platform_id: string | null
   pillar_id: string
+  /** Set by Server Actions; ties listing to the authenticated user via RLS */
+  user_id: string | null
   title: string
   description: string
   tags: string[]
@@ -94,6 +97,10 @@ export interface GigListing {
   delivery_days_standard: number | null
   delivery_days_premium: number | null
   gig_url: string
+  /** Added in migration 018 — URL to thumbnail image */
+  thumbnail_url: string
+  /** Added in migration 018 — hides pricing and prompts "Contact for a quote" */
+  contact_for_pricing: boolean
   impressions: number
   clicks: number
   orders: number
@@ -360,8 +367,7 @@ export interface Database {
       }
       gig_listings: {
         Row: GigListing
-        Insert: Partial<GigListing> &
-          Pick<GigListing, "platform_id" | "pillar_id" | "title">
+        Insert: Partial<GigListing> & Pick<GigListing, "pillar_id" | "title">
         Update: Partial<GigListing>
       }
       gig_versions: {

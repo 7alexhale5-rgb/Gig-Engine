@@ -92,6 +92,20 @@ export const gigSchema = z.object({
     .url("Must be a valid URL")
     .optional()
     .or(z.literal("")),
+
+  // -- Media ---------------------------------------------------------------
+
+  /** Thumbnail image URL for the service listing. */
+  thumbnail_url: z
+    .string()
+    .url("Must be a valid URL")
+    .optional()
+    .or(z.literal("")),
+
+  // -- Pricing behavior ----------------------------------------------------
+
+  /** When true, pricing fields are hidden and clients must contact for a quote. */
+  contact_for_pricing: z.boolean().default(false),
 })
 
 // ---------------------------------------------------------------------------
