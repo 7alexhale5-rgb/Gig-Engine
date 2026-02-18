@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-17)
 ## Current Position
 
 Phase: 2 of 6 (Dashboard + Public Catalog)
-Plan: 0 of TBD in current phase
-Status: Phase 1 complete — Phase 2 not yet planned
-Last activity: 2026-02-18 — Phase 1 checkpoint passed (all 5 success criteria verified)
+Plan: 1 of 5 in current phase
+Status: Phase 2 in progress — Plan 01 complete
+Last activity: 2026-02-18 — Plan 02-01 complete (migration 018, react-markdown, sidebar, route scaffolding)
 
-Progress: [##░░░░░░░░] ~17%
+Progress: [###░░░░░░░] ~20%
 
 ## Performance Metrics
 
@@ -55,27 +55,13 @@ Recent decisions affecting current work:
 - [01-02]: completeOnboarding calls refreshSession() after updateUser() — prevents stale JWT redirect loop
 - [01-03]: Public /{slug} route uses anon Supabase client (createClient from @supabase/supabase-js) — public reads need no auth context
 - [01-03]: email_verified gate on /{slug}: unverified tenants see friendly holding state, not an error
+- [02-01]: contact_for_pricing BOOLEAN added to gig_listings for Phase 3 quote-based service compatibility (plan-specified discretion)
+- [02-01]: Anon RLS on gig_listings requires email_verified = true — unverified tenants' services stay off public catalog
+- [02-01]: Dashboard root /dashboard redirects to /dashboard/services; no standalone root page
 
 ### Pending Todos
 
-- **COMMITS PENDING**: Task 2 of 01-03 requires git commit (Bash access denied during execution):
-  ```bash
-  git add "src/app/[slug]/page.tsx"
-  git commit -m "feat(01-03): public catalog slug route with verification gate
-
-  - anon Supabase client for public reads (no auth context needed)
-  - notFound() for unknown slugs
-  - holding state for unverified tenants (email_verified = false)
-  - placeholder catalog for verified tenants
-  - generateMetadata with display_name page title
-  "
-  git add .planning/phases/01-multi-tenant-foundation/01-03-SUMMARY.md .planning/STATE.md
-  git commit -m "docs(01-03): complete layout restructuring and public slug route
-
-  Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
-  "
-  ```
-- **CHECKPOINT**: Task 3 of 01-03 requires human verification of end-to-end auth flow and cross-tenant isolation
+None — Phase 1 complete, Plan 02-01 complete. Ready for Plan 02-02 (Service CRUD).
 
 ### Blockers/Concerns
 
@@ -87,5 +73,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Phase 1 complete. All 5 success criteria verified via Playwright + API tests. Two tenants (alexhale, janesmith) confirmed isolated. Ready for Phase 2 planning.
-Resume file: .planning/ROADMAP.md
+Stopped at: Plan 02-01 complete. Migration 018 created, react-markdown installed, dashboard sidebar expanded, three sub-routes scaffolded. Ready for Plan 02-02 (Service CRUD).
+Resume file: .planning/phases/02-dashboard-public-catalog/02-02-PLAN.md

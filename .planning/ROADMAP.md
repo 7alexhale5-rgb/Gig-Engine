@@ -49,7 +49,7 @@ Plans:
   5. Services correctly display Basic/Standard/Premium package pricing where defined
 **Plans**: 5 plans
 Plans:
-- [ ] 02-01-PLAN.md — Migration 018 (bio, thumbnail_url, platform_id nullable, anon RLS) + dashboard sidebar + route scaffolding
+- [x] 02-01-PLAN.md — Migration 018 (bio, thumbnail_url, platform_id nullable, anon RLS) + dashboard sidebar + route scaffolding
 - [ ] 02-02-PLAN.md — Service CRUD (create/edit/delete Server Actions, form with pricing tiers + thumbnails, card grid list)
 - [ ] 02-03-PLAN.md — Profile management (display name, avatar, tagline, bio) + settings (slug editing)
 - [ ] 02-04-PLAN.md — Public catalog page (CatalogHeader, service cards grouped by pillar, markdown rendering, mobile-responsive)
@@ -108,7 +108,7 @@ Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in paralle
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-02-18 |
-| 2. Dashboard + Public Catalog | 0/5 | Planned | - |
+| 2. Dashboard + Public Catalog | 1/5 | In Progress | - |
 | 3. Stripe Payments | 0/TBD | Not started | - |
 | 4. Analytics Dashboard | 0/TBD | Not started | - |
 | 5. Gig Import Pipeline | 0/TBD | Not started | - |
