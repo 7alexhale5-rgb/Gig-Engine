@@ -1,6 +1,6 @@
 /**
- * Auth layout — renders full-screen over the root layout's sidebar.
- * Uses fixed positioning to cover the entire viewport.
+ * Auth layout — centered full-height layout for login/signup pages.
+ * Root layout no longer has a sidebar, so no overlay needed.
  */
 export default function AuthLayout({
   children,
@@ -8,8 +8,10 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="fixed inset-0 z-50 bg-background">
-      {children}
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      <div className="w-full max-w-md">
+        {children}
+      </div>
     </div>
   )
 }

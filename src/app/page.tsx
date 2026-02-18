@@ -28,7 +28,7 @@ export default function ServiceCatalog() {
   const stats = getStats()
 
   return (
-    <>
+    <div className="flex h-screen flex-col overflow-hidden">
       <Header
         title="Service Catalog"
         description={`${stats.totalFiverr} Fiverr + ${stats.totalUpwork} Upwork listings across 5 pillars`}
@@ -122,7 +122,7 @@ export default function ServiceCatalog() {
           )
         })}
       </PageContainer>
-    </>
+    </div>
   )
 }
 

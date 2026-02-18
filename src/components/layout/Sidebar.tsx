@@ -4,7 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
-  LayoutDashboard,
   Store,
   ChevronLeft,
   Zap,
@@ -15,14 +14,18 @@ const navigation = [
   { name: "Service Catalog", href: "/", icon: Store },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  footer?: React.ReactNode
+}
+
+export function Sidebar({ footer }: SidebarProps = {}) {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
 
   return (
     <aside
       className={cn(
-        "flex h-screen flex-col border-r border-border bg-card transition-all duration-200",
+        "flex h-full flex-col border-r border-border bg-card transition-all duration-200",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -64,6 +67,13 @@ export function Sidebar() {
           )
         })}
       </nav>
+
+      {/* Optional footer slot (e.g. LogoutButton) */}
+      {footer && (
+        <div className="border-t border-border p-2">
+          {footer}
+        </div>
+      )}
 
       {/* Collapse toggle */}
       <div className="border-t border-border p-2">

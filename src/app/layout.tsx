@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import { Sidebar } from "@/components/layout"
 
 export const metadata: Metadata = {
   title: "PrettyFly Service Catalog",
@@ -15,12 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="font-sans antialiased">
-        <div className="flex h-screen overflow-hidden">
-          <Sidebar />
-          <main className="flex flex-1 flex-col overflow-hidden">
-            {children}
-          </main>
-        </div>
+        {children}
       </body>
     </html>
   )

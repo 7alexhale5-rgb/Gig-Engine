@@ -1,6 +1,6 @@
 /**
- * Onboarding layout — renders full-screen over the root layout's sidebar.
- * Uses fixed positioning to cover the entire viewport.
+ * Onboarding layout — full-height centered layout.
+ * Root layout no longer has a sidebar, so no overlay needed.
  */
 export default function OnboardingLayout({
   children,
@@ -8,7 +8,7 @@ export default function OnboardingLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="fixed inset-0 z-50 bg-background">
+    <div className="min-h-screen bg-background">
       {children}
     </div>
   )

@@ -1,3 +1,5 @@
 export { Sidebar } from "./Sidebar"
 export { Header } from "./Header"
 export { PageContainer } from "./PageContainer"
+export { LogoutButton } from "./LogoutButton"
+export { VerificationBanner } from "./VerificationBanner"
