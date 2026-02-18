@@ -1,8 +1,13 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import { Header, PageContainer } from "@/components/layout"
+import { SettingsForm } from "./SettingsForm"
 
-export default async function SettingsPage() {
+interface SettingsPageProps {
+  searchParams: Promise<{ saved?: string; error?: string }>
+}
+
+export default async function SettingsPage({ searchParams }: SettingsPageProps) {
   const supabase = await createClient()
 
   const {
@@ -13,6 +18,16 @@ export default async function SettingsPage() {
     redirect("/login")
   }
 
+  const { data: tenant } = await supabase
+    .from("tenants")
+    .select("slug, display_name")
+    .eq("user_id", user.id)
+    .single()
+
+  const params = await searchParams
+  const saved = params.saved === "true"
+  const errorMessage = params.error ? decodeURIComponent(params.error) : undefined
+
   return (
     <>
       <Header
@@ -20,11 +35,13 @@ export default async function SettingsPage() {
         description="Account settings"
       />
       <PageContainer>
-        <div className="rounded-lg border border-border bg-card p-6">
-          <p className="text-sm text-muted-foreground">
-            Settings coming soon.
-          </p>
-        </div>
+        <SettingsForm
+          email={user.email ?? ""}
+          currentSlug={tenant?.slug ?? ""}
+          displayName={tenant?.display_name ?? null}
+          saved={saved}
+          errorMessage={errorMessage}
+        />
       </PageContainer>
     </>
   )
