@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-17)
 ## Current Position
 
 Phase: 1 of 6 (Multi-Tenant Foundation)
-Plan: 2 of TBD in current phase (01-02 complete)
-Status: In progress
-Last activity: 2026-02-17 — Completed Plan 01-02 (auth flow + onboarding wizard)
+Plan: 3 of TBD in current phase (01-03 Tasks 1+2 complete, checkpoint pending)
+Status: In progress — awaiting human verification (Task 3 checkpoint)
+Last activity: 2026-02-17 — Completed Plan 01-03 Tasks 1+2 (layout restructuring, public slug route)
 
-Progress: [##░░░░░░░░] ~10%
+Progress: [###░░░░░░░] ~15%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
+- Total plans completed: 2 (01-01, 01-02) + 01-03 in progress
 - Average duration: ~56 min
-- Total execution time: ~1h 52min
+- Total execution time: ~1h 52min + ~25min (01-03)
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-multi-tenant-foundation | 2 | ~112 min | ~56 min |
+| 01-multi-tenant-foundation | 2 complete + 1 in progress | ~137 min | ~46 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (47min), 01-02 (~65min)
-- Trend: Stable
+- Last 5 plans: 01-01 (47min), 01-02 (~65min), 01-03 (~25min, partial)
+- Trend: Faster (01-03 automated tasks pre-built by 01-02)
 
 *Updated after each plan completion*
 
@@ -50,14 +50,32 @@ Recent decisions affecting current work:
 - [01-01]: user_id added as NULLABLE — existing seeded rows invisible via RLS (NULL != any UUID), not deleted
 - [01-01]: findAvailableSlug accepts SupabaseClient param — decoupled from cookie-based server context
 - [01-01]: Public anon SELECT on tenants requires slug IS NOT NULL AND onboarding_complete = true
-- [01-02]: Auth/onboarding layouts use fixed inset-0 z-50 overlay — avoids restructuring root layout
+- [01-02]: Auth/onboarding layouts use fixed inset-0 z-50 overlay — avoids restructuring root layout (now superseded by 01-03 clean root layout)
 - [01-02]: checkSlugAvailability uses anon Supabase client — authenticated client only sees own tenant row
 - [01-02]: completeOnboarding calls refreshSession() after updateUser() — prevents stale JWT redirect loop
+- [01-03]: Public /{slug} route uses anon Supabase client (createClient from @supabase/supabase-js) — public reads need no auth context
+- [01-03]: email_verified gate on /{slug}: unverified tenants see friendly holding state, not an error
 
 ### Pending Todos
 
-- **URGENT**: Delete `src/app/(main)/page.tsx` and `src/app/(main)/layout.tsx` — accidental files created during Plan 01-02, cause route conflict blocking `next build`
-  - Command: `rm -rf /Users/alexhale/Projects/Gig-Engine/src/app/\(main\)/`
+- **COMMITS PENDING**: Task 2 of 01-03 requires git commit (Bash access denied during execution):
+  ```bash
+  git add "src/app/[slug]/page.tsx"
+  git commit -m "feat(01-03): public catalog slug route with verification gate
+
+  - anon Supabase client for public reads (no auth context needed)
+  - notFound() for unknown slugs
+  - holding state for unverified tenants (email_verified = false)
+  - placeholder catalog for verified tenants
+  - generateMetadata with display_name page title
+  "
+  git add .planning/phases/01-multi-tenant-foundation/01-03-SUMMARY.md .planning/STATE.md
+  git commit -m "docs(01-03): complete layout restructuring and public slug route
+
+  Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+  "
+  ```
+- **CHECKPOINT**: Task 3 of 01-03 requires human verification of end-to-end auth flow and cross-tenant isolation
 
 ### Blockers/Concerns
 
@@ -65,10 +83,9 @@ Recent decisions affecting current work:
 - [Phase 3]: Stripe webhook handler must use req.text() before constructEvent — not req.json() (destroys HMAC signature)
 - [Phase 5]: Scraper auth state expires every 7-30 days silently — import worker must detect login-wall DOM signatures and surface re-auth prompt
 - [Phase 5]: Run /gsd:research-phase before planning this phase (Upwork API viability, Supabase Vault pattern)
-- [01-02]: BLOCKER: src/app/(main)/ directory causes route conflict — must delete before next build
 
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Plan 01-02 complete. Auth flow + onboarding wizard implemented. Bash access needed for commits and (main)/ directory cleanup.
-Resume file: .planning/phases/01-multi-tenant-foundation/01-02-SUMMARY.md
+Stopped at: Plan 01-03 Tasks 1+2 complete. Public slug route created. Awaiting Task 3 human verification checkpoint. Bash access needed for git commits.
+Resume file: .planning/phases/01-multi-tenant-foundation/01-03-SUMMARY.md

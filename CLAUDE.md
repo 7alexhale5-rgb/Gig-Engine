@@ -6,8 +6,9 @@ Document-driven freelance deployment system. Pivoted from SaaS app to automation
 
 ## Current State
 - 62 listings ready (31 Fiverr, 31 Upwork) across 5 pillars in `listings/`
-- 22 Fiverr gig images (1280x769 PNG) in `images/fiverr/` (9 P3 images pending)
+- 31 Fiverr gig images (1280x769 PNG) in `images/fiverr/` — all complete
 - 31 services in strategy matrix (12 P1 + 10 P2 + 9 P3) — all listings generated
+- Service catalog UI LIVE at https://gig-engine.vercel.app (GitHub auto-deploy)
 - Strategy matrix + platform-specific checklists
 - Gig Monitor LIVE (daily Playwright scraping + Haiku AI morning briefing via Telegram)
 - Weekly summary via Telegram (Sundays 9 AM via launchd)
