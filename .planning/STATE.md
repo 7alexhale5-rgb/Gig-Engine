@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-17)
 ## Current Position
 
 Phase: 2 of 6 (Dashboard + Public Catalog)
-Plan: 4 of 5 in current phase
-Status: Phase 2 in progress — Plans 01, 02, 03 complete
-Last activity: 2026-02-18 — Plan 02-03 complete (profile editing form with avatar preview, settings page with slug editor and availability check)
+Plan: 5 of 5 in current phase
+Status: Phase 2 in progress — Plans 01, 02, 03, 04 complete
+Last activity: 2026-02-18 — Plan 02-04 complete (full public catalog at /{slug}: CatalogHeader, ServicePillarSection, PublicServiceCard, PricingTierDisplay — real data, react-markdown, mobile-responsive)
 
-Progress: [####░░░░░░] ~32%
+Progress: [#####░░░░░] ~38%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5 (01-01, 01-02, 01-03, 02-01, 02-02, 02-03)
-- Average duration: ~26 min
-- Total execution time: ~137min (Phase 1) + ~11min (Phase 2 so far)
+- Total plans completed: 6 (01-01, 01-02, 01-03, 02-01, 02-02, 02-03, 02-04)
+- Average duration: ~23 min
+- Total execution time: ~137min (Phase 1) + ~13min (Phase 2 so far)
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-multi-tenant-foundation | 3 complete | ~137 min | ~46 min |
-| 02-dashboard-public-catalog | 3 complete (02-01, 02-02, 02-03) | ~11 min | ~3.7 min |
+| 02-dashboard-public-catalog | 4 complete (02-01, 02-02, 02-03, 02-04) | ~13 min | ~3.3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (2min), 02-02 (4min), 02-03 (5min)
+- Last 5 plans: 02-01 (2min), 02-02 (4min), 02-03 (5min), 02-04 (2min)
 - Trend: Very fast — well-scoped plans, clear patterns, pre-existing auth/supabase scaffolding
 
 *Updated after each plan completion*
@@ -65,6 +65,10 @@ Recent decisions affecting current work:
 - [02-03]: ProfileForm and SettingsForm collocated in route directory — avoids premature abstraction; Server Action error path uses redirect with encoded query param
 - [02-03]: Slug change warning only shown when slug !== currentSlug — reduces visual noise
 - [02-03]: zodResolver requires z.input<> type annotation (not z.infer/z.output) when schema uses .default() — avoids resolver type mismatch with hook-form
+- [02-04]: BioExpander is the only 'use client' catalog component — bio expand toggle only; all other catalog components are pure Server Components
+- [02-04]: Pillar color applied via inline style borderLeftColor — dynamic colors can't use Tailwind JIT
+- [02-04]: PricingTierDisplay uses grid-cols-1 on mobile, grid-cols-3 on sm+ — prevents horizontal scroll (catalog mobile safety)
+- [02-04]: Contact for pricing CTA mailto:hello@prettyfly.ai — no payment flow in Phase 2, Phase 3 will replace with Stripe CTA
 
 ### Pending Todos
 
@@ -81,5 +85,5 @@ None — Plans 02-01, 02-02, 02-03 complete. Ready for Plan 02-04 (Public Catalo
 ## Session Continuity
 
 Last session: 2026-02-18
-Stopped at: Plan 02-03 complete. Profile editing form (display_name, tagline, bio, avatar_url with live preview) and settings page (email read-only, slug editor with anon-client availability check and amber warning) implemented with zod-validated Server Actions. Build passes. Ready for Plan 02-04 (Public Catalog).
-Resume file: .planning/phases/02-dashboard-public-catalog/02-04-PLAN.md
+Stopped at: Plan 02-04 complete. Public catalog at /{slug} with CatalogHeader, ServicePillarSection, PublicServiceCard, PricingTierDisplay — real data, react-markdown, mobile-responsive. Ready for Plan 02-05 (Human verification checkpoint).
+Resume file: .planning/phases/02-dashboard-public-catalog/02-05-PLAN.md

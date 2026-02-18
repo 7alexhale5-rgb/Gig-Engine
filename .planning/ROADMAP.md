@@ -52,7 +52,7 @@ Plans:
 - [x] 02-01-PLAN.md — Migration 018 (bio, thumbnail_url, platform_id nullable, anon RLS) + dashboard sidebar + route scaffolding
 - [x] 02-02-PLAN.md — Service CRUD (create/edit/delete Server Actions, form with pricing tiers + thumbnails, card grid list)
 - [x] 02-03-PLAN.md — Profile management (display name, avatar, tagline, bio) + settings (slug editing)
-- [ ] 02-04-PLAN.md — Public catalog page (CatalogHeader, service cards grouped by pillar, markdown rendering, mobile-responsive)
+- [x] 02-04-PLAN.md — Public catalog page (CatalogHeader, service cards grouped by pillar, markdown rendering, mobile-responsive)
 - [ ] 02-05-PLAN.md — Human verification checkpoint for all 5 Phase 2 success criteria
 
 ### Phase 3: Stripe Payments
@@ -108,7 +108,7 @@ Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in paralle
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-02-18 |
-| 2. Dashboard + Public Catalog | 3/5 | In Progress | - |
+| 2. Dashboard + Public Catalog | 4/5 | In Progress | - |
 | 3. Stripe Payments | 0/TBD | Not started | - |
 | 4. Analytics Dashboard | 0/TBD | Not started | - |
 | 5. Gig Import Pipeline | 0/TBD | Not started | - |
