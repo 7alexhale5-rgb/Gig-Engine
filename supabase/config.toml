@@ -1,7 +1,3 @@
-[project]
-id = "prettyfly-acquisition-engine"
-name = "PrettyFly Acquisition Engine"
-
 [api]
 port = 54321
 schemas = ["public"]

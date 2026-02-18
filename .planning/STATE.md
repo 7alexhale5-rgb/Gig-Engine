@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-17)
 
 **Core value:** Freelancers can instantly create a professional service catalog from their existing platform listings and start accepting payments.
-**Current focus:** Phase 1 — Multi-Tenant Foundation
+**Current focus:** Phase 2 — Dashboard + Public Catalog
 
 ## Current Position
 
-Phase: 1 of 6 (Multi-Tenant Foundation)
-Plan: 3 of TBD in current phase (01-03 Tasks 1+2 complete, checkpoint pending)
-Status: In progress — awaiting human verification (Task 3 checkpoint)
-Last activity: 2026-02-17 — Completed Plan 01-03 Tasks 1+2 (layout restructuring, public slug route)
+Phase: 2 of 6 (Dashboard + Public Catalog)
+Plan: 0 of TBD in current phase
+Status: Phase 1 complete — Phase 2 not yet planned
+Last activity: 2026-02-18 — Phase 1 checkpoint passed (all 5 success criteria verified)
 
-Progress: [###░░░░░░░] ~15%
+Progress: [##░░░░░░░░] ~17%
 
 ## Performance Metrics
 
@@ -86,6 +86,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-02-17
-Stopped at: Plan 01-03 Tasks 1+2 complete. Public slug route created. Awaiting Task 3 human verification checkpoint. Bash access needed for git commits.
-Resume file: .planning/phases/01-multi-tenant-foundation/01-03-SUMMARY.md
+Last session: 2026-02-18
+Stopped at: Phase 1 complete. All 5 success criteria verified via Playwright + API tests. Two tenants (alexhale, janesmith) confirmed isolated. Ready for Phase 2 planning.
+Resume file: .planning/ROADMAP.md

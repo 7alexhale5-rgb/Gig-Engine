@@ -12,7 +12,7 @@ Gig-Engine evolves from a single-user static service catalog into a multi-tenant
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Multi-Tenant Foundation** - Activate Supabase auth, migrate database to multi-tenant schema with RLS, verify cross-tenant isolation
+- [x] **Phase 1: Multi-Tenant Foundation** - Activate Supabase auth, migrate database to multi-tenant schema with RLS, verify cross-tenant isolation
 - [ ] **Phase 2: Dashboard + Public Catalog** - Auth-gated dashboard with manual service CRUD and profile management; public catalog page at /{slug}
 - [ ] **Phase 3: Stripe Payments** - Stripe Checkout for fixed-price services; inquiry form for custom services; idempotent webhook handler
 - [ ] **Phase 4: Analytics Dashboard** - Page view and click tracking on public catalog; revenue metrics dashboard; per-service conversion funnel
@@ -33,9 +33,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. The existing Gig Monitor, morning report, and Telegram scripts continue to run without modification
 **Plans**: 3 plans
 Plans:
-- [ ] 01-01-PLAN.md — Database migration: tenants table, user_id columns, RLS policies
-- [ ] 01-02-PLAN.md — Auth infrastructure: middleware, login/signup/logout, onboarding wizard
-- [ ] 01-03-PLAN.md — Layout restructuring, public slug route, verification gate, cross-tenant verification
+- [x] 01-01-PLAN.md — Database migration: tenants table, user_id columns, RLS policies
+- [x] 01-02-PLAN.md — Auth infrastructure: middleware, login/signup/logout, onboarding wizard
+- [x] 01-03-PLAN.md — Layout restructuring, public slug route, verification gate, cross-tenant verification
 
 ### Phase 2: Dashboard + Public Catalog
 **Goal**: A freelancer can manage their service listings in a private dashboard and share a polished public catalog page with clients
@@ -101,7 +101,7 @@ Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in paralle
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Multi-Tenant Foundation | 0/3 | Planning complete | - |
+| 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-02-18 |
 | 2. Dashboard + Public Catalog | 0/TBD | Not started | - |
 | 3. Stripe Payments | 0/TBD | Not started | - |
 | 4. Analytics Dashboard | 0/TBD | Not started | - |
