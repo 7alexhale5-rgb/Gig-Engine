@@ -47,7 +47,13 @@ Plans:
   3. A visitor navigates to /{slug} without logging in and sees the freelancer's services grouped by pillar with pricing tiers and thumbnails
   4. The public catalog page is fully usable on a mobile device (phone viewport, no horizontal scroll, touch targets correct)
   5. Services correctly display Basic/Standard/Premium package pricing where defined
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 02-01-PLAN.md — Migration 018 (bio, thumbnail_url, platform_id nullable, anon RLS) + dashboard sidebar + route scaffolding
+- [ ] 02-02-PLAN.md — Service CRUD (create/edit/delete Server Actions, form with pricing tiers + thumbnails, card grid list)
+- [ ] 02-03-PLAN.md — Profile management (display name, avatar, tagline, bio) + settings (slug editing)
+- [ ] 02-04-PLAN.md — Public catalog page (CatalogHeader, service cards grouped by pillar, markdown rendering, mobile-responsive)
+- [ ] 02-05-PLAN.md — Human verification checkpoint for all 5 Phase 2 success criteria
 
 ### Phase 3: Stripe Payments
 **Goal**: Visitors can purchase a fixed-price service via Stripe Checkout or submit a custom inquiry that reaches the freelancer's email
@@ -102,7 +108,7 @@ Note: Phase 5 depends on Phase 2 (not Phase 4) — it can be executed in paralle
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Multi-Tenant Foundation | 3/3 | Complete | 2026-02-18 |
-| 2. Dashboard + Public Catalog | 0/TBD | Not started | - |
+| 2. Dashboard + Public Catalog | 0/5 | Planned | - |
 | 3. Stripe Payments | 0/TBD | Not started | - |
 | 4. Analytics Dashboard | 0/TBD | Not started | - |
 | 5. Gig Import Pipeline | 0/TBD | Not started | - |
