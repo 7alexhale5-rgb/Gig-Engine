@@ -4,14 +4,18 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
-  Store,
   ChevronLeft,
+  LayoutGrid,
+  Settings,
+  User,
   Zap,
 } from "lucide-react"
 import { useState } from "react"
 
 const navigation = [
-  { name: "Service Catalog", href: "/", icon: Store },
+  { name: "Services", href: "/dashboard/services", icon: LayoutGrid },
+  { name: "Profile", href: "/dashboard/profile", icon: User },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 
 interface SidebarProps {
