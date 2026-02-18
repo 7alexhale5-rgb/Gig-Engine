@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -33,6 +33,14 @@ type SlugStatus = "idle" | "checking" | "available" | "taken"
 const BASE_URL = "gig-engine.vercel.app"
 
 export default function OnboardingPage() {
+  return (
+    <Suspense>
+      <OnboardingForm />
+    </Suspense>
+  )
+}
+
+function OnboardingForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const errorParam = searchParams.get("error")
